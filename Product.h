@@ -5,8 +5,17 @@
 #ifndef WGGIOS_SHOPPING_LIST_PRODUCT_H
 #define WGGIOS_SHOPPING_LIST_PRODUCT_H
 
+#include <string>
 
 class Product {
+
+private:
+    std::string name;
+
+public:
+    Product();
+    Product(std::string name);
+
 
 };
 
