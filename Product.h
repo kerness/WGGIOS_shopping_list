@@ -10,11 +10,15 @@
 class Product {
 
 private:
-    std::string listName;
+    std::string productName;
+    int quantity;
 
 public:
     Product();
     Product(std::string name);
+
+    std::string getProductName();
+    int getProductQuantity();
 
 };
 
