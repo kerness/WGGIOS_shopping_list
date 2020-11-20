@@ -10,12 +10,11 @@
 class Product {
 
 private:
-    std::string name;
+    std::string listName;
 
 public:
     Product();
     Product(std::string name);
-
 
 };
 

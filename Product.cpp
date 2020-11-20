@@ -3,3 +3,11 @@
 //
 
 #include "Product.h"
+
+Product::Product()
+{
+}
+
+Product::Product(std::string name) : listName(name)
+{
+}

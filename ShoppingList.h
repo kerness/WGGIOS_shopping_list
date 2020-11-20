@@ -15,12 +15,12 @@ class ShoppingList {
 
 private:
     std::string listName;
-    std::vector<Product *> productList {LENGTH};
+    Product* products = new Product[LENGTH];
+    
 
 public:
     ShoppingList(std::string name);
-    ShoppingList(const ShoppingList &shoppingList);
-    ~ShoppingList();
+ 
 
     std::string getListName();
 

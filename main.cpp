@@ -9,21 +9,25 @@
 #include "Product.h"
 #include "ShoppingList.h"
 
-void showShoppingLists(std::vector<ShoppingList> list);
-void addShoppingList(std::vector<ShoppingList> list);
-void editShoppingList(std::vector<ShoppingList> list);
-void deleteShoppingList(std::vector<ShoppingList> list);
 
-void addProductToList(ShoppingList *shoppingList, Product *product);
+
+
+
 
 std::string getStringLine();
 int getInt();
+
+void addShoppingList(std::vector<ShoppingList>& list);
+void showShoppingLists(std::vector<ShoppingList>& list);
+void deleteShoppingList(std::vector<ShoppingList>& list);
+void editShoppingList(std::vector<ShoppingList>& list);
+
 
 
 int main() {
 
     int mainMenu;
-    std::vector<ShoppingList> shoppingLists {};
+    std::vector<ShoppingList> shoppingLists;
 
     do {
 
@@ -65,39 +69,48 @@ int main() {
 }
 
 std::string getStringLine() {
+    /*do modyfikacji*/
     std::string  line;
     std::getline(std::cin, line);
     return line;
 }
 
 int getInt() {
+    /*raczej do usiniêcia*/
     std::string line;
     std::getline(std::cin, line);
     return atoi(line.c_str());
 }
 
-void addShoppingList(std::vector<ShoppingList> list) {
-    std::cout << "Podaj nazwe listy";
+void addShoppingList(std::vector<ShoppingList>& list) {
+    std::cout << "Podaj nazwe nowej listy: ";
     std::string newListName = getStringLine();
     ShoppingList newList(newListName);
-    std::cout << "Nazwa nowej listy " << newList.getListName();
+    std::cout << "Nazwa nowej listy " << newList.getListName(); // for checking and debuging
     list.push_back(newList);
-    std::cout << "\n\nDodano nowa liste " << list.back().getListName()<< "Aktualna liczba list to: " << list.size();
+    std::cout << "\n\nDodano nowa liste '" << list.back().getListName()<< "' Aktualna liczba list to: " << list.size();
 }
 
-void editShoppingList(std::vector<ShoppingList> list) {
-
-
-}
-void deleteShoppingList(std::vector<ShoppingList> list) {
+void deleteShoppingList(std::vector<ShoppingList>& list) {
     showShoppingLists(list);
     std::cout << "Podaj numer listy, ktora chcesz usunac: ";
     int pos = getInt();
-    list.erase(list.begin()+pos); // usuwa element vecotra okreslony przez position
+    list.erase(list.begin() + pos); // usuwa element vecotra okreslony przez position
+    std::cout << "Pomyslnie usunieto " << pos << "liste";
 }
 
-void showShoppingLists(std::vector<ShoppingList> list) {
-    for(int i = 0; i < list.size(); i++) {
-        std::cout << i << ". " << list[i].getListName();
+
+void showShoppingLists(std::vector<ShoppingList>& list) {
+    std::cout << "Twoje aktualne listy zakupow:\n";
+    for (int i = 0; i < list.size(); i++) {
+        std::cout << i << ". " << list[i].getListName() << "\n";
     }
 }
+
+void editShoppingList(std::vector<ShoppingList>& list) {
+    showShoppingLists(list);
+    std::cout << "Podaj numer listy, ktora chcesz edytowac: ";
+    
+
+}
+
