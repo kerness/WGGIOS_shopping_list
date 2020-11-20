@@ -1,3 +1,3 @@
 # WGGIOS_shopping_list
 
-OOP programming course.
+OOP programming course semestral project.
