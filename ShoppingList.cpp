@@ -13,3 +13,11 @@ std::string ShoppingList::getListName() {
     return listName;
 }
 
+void ShoppingList::addProduct(std::string name)
+{
+    // alokacja miejsca dla product
+    Product* newProduct = new Product(name);
+    // wstawienie na koniec listy
+    products.push_back(newProduct);
+}
+

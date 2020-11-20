@@ -8,6 +8,7 @@
 #include <string>
 #include <vector>
 #include "Product.h"
+#include <list>
 
 constexpr int LENGTH = 10;
 
@@ -15,14 +16,18 @@ class ShoppingList {
 
 private:
     std::string listName;
-    Product* products = new Product[LENGTH];
-    
+    std::list<Product*> products;
 
 public:
+    // constructor
     ShoppingList(std::string name);
  
 
     std::string getListName();
+
+    // to manage products
+    void addProduct(std::string name);
+
 
 
 

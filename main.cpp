@@ -31,15 +31,16 @@ int main() {
 
     do {
 
+        std::cout << 
+            "-----------------------------\n"
+            "       LISTA ZAKUPOW\n"
+            "-----------------------------\n"
+            "       1. Dodaj liste\n"
+            "       2. Edytuj liste\n"
+            "       3. Usun liste\n"
+            << std::endl;
 
 
-        std::cout << "\n------------------------ \n"
-                     "|    _LISTA ZAKUPOW_    |\n"
-                     "|    1. Dodaj liste     |\n"
-                     "|    2. Edytuj liste    |\n"
-                     "|     3. Usun liste     |\n"
-                     "------------------------ \n"
-                  << std::endl;
         mainMenu = getInt();
 
         switch (mainMenu) {
@@ -48,7 +49,7 @@ int main() {
                 addShoppingList(shoppingLists);
                 break;
             case 2:
-                showShoppingLists(shoppingLists);
+                editShoppingList(shoppingLists);
                 break;
             case 3:
                 deleteShoppingList(shoppingLists);
@@ -86,9 +87,9 @@ void addShoppingList(std::vector<ShoppingList>& list) {
     std::cout << "Podaj nazwe nowej listy: ";
     std::string newListName = getStringLine();
     ShoppingList newList(newListName);
-    std::cout << "Nazwa nowej listy " << newList.getListName(); // for checking and debuging
+    //std::cout << "Nazwa nowej listy " << newList.getListName(); // for checking and debuging
     list.push_back(newList);
-    std::cout << "\n\nDodano nowa liste '" << list.back().getListName()<< "' Aktualna liczba list to: " << list.size();
+    std::cout << "Dodano nowa liste '" << list.back().getListName()<< "' Aktualna liczba list to: " << list.size() << std::endl;
 }
 
 void deleteShoppingList(std::vector<ShoppingList>& list) {
@@ -96,20 +97,25 @@ void deleteShoppingList(std::vector<ShoppingList>& list) {
     std::cout << "Podaj numer listy, ktora chcesz usunac: ";
     int pos = getInt();
     list.erase(list.begin() + pos); // usuwa element vecotra okreslony przez position
-    std::cout << "Pomyslnie usunieto " << pos << "liste";
+    std::cout << "Pomyslnie usunieto " << pos << "liste" << std::endl;
 }
 
-
+//unused in main menu
 void showShoppingLists(std::vector<ShoppingList>& list) {
     std::cout << "Twoje aktualne listy zakupow:\n";
     for (int i = 0; i < list.size(); i++) {
-        std::cout << i << ". " << list[i].getListName() << "\n";
+        std::cout << i << ". " << list[i].getListName() << std::endl;
     }
-}
+} 
 
 void editShoppingList(std::vector<ShoppingList>& list) {
     showShoppingLists(list);
-    std::cout << "Podaj numer listy, ktora chcesz edytowac: ";
+    std::cout << "Podaj numer listy, ktora chcesz edytowac: " << std::endl;
+    int pos = getInt();
+    std::cout << "Podaj nazwe przedmiotu ktory chcesz dodac do listy '" << list[pos].getListName() << "': " << std::endl;
+    std::string newItemName = getStringLine();
+    list[pos].addProduct(newItemName);
+    //std::cout << "Podaj ilos sztuk przedmiotu '" << list[pos]. << "': " << std::endl;
     
 
 }
