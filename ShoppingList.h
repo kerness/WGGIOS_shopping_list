@@ -9,17 +9,20 @@
 #include <vector>
 #include "Product.h"
 
+constexpr int LENGTH = 10;
+
 class ShoppingList {
 
 private:
-    std::string name;
-    std::vector<Product *> productList {};
+    std::string listName;
+    std::vector<Product *> productList {LENGTH};
 
 public:
     ShoppingList(std::string name);
     ShoppingList(const ShoppingList &shoppingList);
     ~ShoppingList();
 
+    std::string getListName();
 
 
 
