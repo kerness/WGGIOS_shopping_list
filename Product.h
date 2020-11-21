@@ -8,20 +8,19 @@
 #include <string>
 
 class Product {
-
 private:
-    std::string productName;
+    std::string name;
     int quantity;
 
 public:
     Product();
     Product(std::string name);
-    Product(std::string name, int quant);
 
+    std::string getName();
+    int getQuantity();
+
+    void changeName(std::string name);
     void changeQuantity(int quantity);
-    std::string getProductName();
-    int getProductQuantity();
-    //void showProductInfo();
 
 };
 

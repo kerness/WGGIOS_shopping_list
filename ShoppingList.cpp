@@ -3,40 +3,61 @@
 //
 
 #include "ShoppingList.h"
+#include <iostream>
 
-ShoppingList::ShoppingList(std::string name) : listName(name), products(products)
+// konstruktor zwyk³y
+ShoppingList::ShoppingList(std::string name) : name(name)
 {
+	products = new Product[maxElements];
 }
 
-
-
-std::string ShoppingList::getListName() {
-    return listName;
-}
-
-void ShoppingList::addProduct(std::string name)
+// konstruktor kopiujacy
+ShoppingList::ShoppingList(const ShoppingList& sl)
 {
-    // alokacja miejsca dla product
-    Product* newProduct = new Product(name, 1);
-    // wstawienie na koniec listy
-    products.push_back(newProduct);
+	name = sl.name;
+	products = new Product[maxElements];
+	for (int i = 0; i < maxElements; ++i) {
+		products[i] = sl.products[i];
 
+	}
+	std::cout << "Dziala konstruktor kopiujacy";
 }
 
 
-Product ShoppingList::getProduct()
+// kopiuj¹cy operator przypisania
+ShoppingList& ShoppingList::operator=(const ShoppingList& sl)
 {
-    
-    return *products.back();
+	if (&sl != this) {
+
+		delete[] products;
+
+		name = sl.name;
+		products = new Product[maxElements];
+		for (int i = 0; i < maxElements; ++i) {
+			products[i] = sl.products[i];
+		}
+	}
+	std::cout << "Pracuje operator przypisania =";
+	return *this;
 }
 
-Product ShoppingList::getProduct(int pos)
+// destruktor
+ShoppingList::~ShoppingList()
 {
-
-    return *products[pos];
+	delete[] products;
 }
 
-int ShoppingList::getListSize()
+// pozosta³e metody
+
+void ShoppingList::addProduct(Product newProduct)
 {
-    return products.size();
+	if (productsCount < maxElements) products[productsCount++] = newProduct;
 }
+
+
+std::string ShoppingList::getName()
+{
+	return name;
+}
+
+

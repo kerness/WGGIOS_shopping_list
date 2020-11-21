@@ -5,40 +5,26 @@
 #ifndef WGGIOS_SHOPPING_LIST_SHOPPINGLIST_H
 #define WGGIOS_SHOPPING_LIST_SHOPPINGLIST_H
 
+#include "Product.h"
 #include <string>
 #include <vector>
-#include "Product.h"
-#include <list>
-
-constexpr int LENGTH = 10;
 
 class ShoppingList {
-
 private:
-    std::string listName;
-    std::vector<Product*> products;
+    std::string name;
+    Product *products;
+    int productsCount = -1;
+    enum {maxElements = 10};
+public:
+    ShoppingList(std::string name);
+    ShoppingList(const ShoppingList& sl);
+    ShoppingList & operator=(const ShoppingList& sl); 
+    ~ShoppingList();
+
+    void addProduct(Product newProduct);
     
 
-public:
-    // constructor
-    ShoppingList(std::string name);
-
- 
-
-    std::string getListName();
-
-   
-
-    // to manage products
-    void addProduct(std::string name);
-
-    Product getProduct();
-    Product getProduct(int pos);
-
-    int getListSize();
-
+    std::string getName();
 
 };
-
-
 #endif //WGGIOS_SHOPPING_LIST_SHOPPINGLIST_H
