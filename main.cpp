@@ -18,9 +18,12 @@ std::string getStringLine();
 int getInt();
 
 void addShoppingList(std::vector<ShoppingList>& list);
-void showShoppingLists(std::vector<ShoppingList>& list);
 void deleteShoppingList(std::vector<ShoppingList>& list);
 void editShoppingList(std::vector<ShoppingList>& list);
+void showShoppingList(std::vector<ShoppingList>& list);
+
+// pomocnicza do menu
+void showShoppingLists(std::vector<ShoppingList>& list);
 
 
 
@@ -38,6 +41,7 @@ int main() {
             "       1. Dodaj liste\n"
             "       2. Edytuj liste\n"
             "       3. Usun liste\n"
+            "       4. Wyswietl liste\n"
             << std::endl;
 
 
@@ -55,6 +59,7 @@ int main() {
                 deleteShoppingList(shoppingLists);
                 break;
             case 4:
+                showShoppingList(shoppingLists);
                 break;
             default:
                 break;
@@ -115,8 +120,28 @@ void editShoppingList(std::vector<ShoppingList>& list) {
     std::cout << "Podaj nazwe przedmiotu ktory chcesz dodac do listy '" << list[pos].getListName() << "': " << std::endl;
     std::string newItemName = getStringLine();
     list[pos].addProduct(newItemName);
-    //std::cout << "Podaj ilos sztuk przedmiotu '" << list[pos]. << "': " << std::endl;
+    std::cout << "Podaj ilos sztuk '"<< list[pos].getProduct().getProductName() << "':" << std::endl;
+    int quant = getInt();
+    list[pos].getProduct().changeQuantity(quant);
+    std::cout << "Pomyslnie dodano '" << list[pos].getProduct().getProductName() << "' w ilosci " << quant << " sztuk." << std::endl;
+   
+}
+
+void showShoppingList(std::vector<ShoppingList>& list)
+{
+    showShoppingLists(list);
+    std::cout << "Wybierz liste ktora chcesz wyswietlic: " << std::endl;
+    int pos = getInt();
+
     
+
+    for (int i = 0; i < list[pos].getListSize(); ++i) {
+
+        std::string name = list[pos].getProduct().getProductName();
+        int quant = list[pos].getProduct(i).getProductQuantity();
+
+        std::cout << i << ". " << name << " - " << quant << " sztuk" << std::endl;
+    }
 
 }
 

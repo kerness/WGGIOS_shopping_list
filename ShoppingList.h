@@ -16,19 +16,26 @@ class ShoppingList {
 
 private:
     std::string listName;
-    std::list<Product*> products;
+    std::vector<Product*> products;
+    
 
 public:
     // constructor
     ShoppingList(std::string name);
+
  
 
     std::string getListName();
 
+   
+
     // to manage products
     void addProduct(std::string name);
 
+    Product getProduct();
+    Product getProduct(int pos);
 
+    int getListSize();
 
 
 };

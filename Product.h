@@ -16,9 +16,12 @@ private:
 public:
     Product();
     Product(std::string name);
+    Product(std::string name, int quant);
 
+    void changeQuantity(int quantity);
     std::string getProductName();
     int getProductQuantity();
+    //void showProductInfo();
 
 };
 
