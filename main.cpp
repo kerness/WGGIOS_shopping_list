@@ -9,7 +9,7 @@
 #include "Product.h"
 #include "ShoppingList.h"
 
-
+// input
 std::string getStringLine();
 int getInt();
 
@@ -17,13 +17,11 @@ void addShoppingList(std::vector<ShoppingList>& list);
 void deleteShoppingList(std::vector<ShoppingList>& list);
 void editShoppingList(std::vector<ShoppingList>& list);
 void showShoppingList(std::vector<ShoppingList>& list);
-//
-//// pomocnicza do menu
+
+// menu support
 void showShoppingLists(std::vector<ShoppingList>& list);
 
 int main() {
-
-    
 
     int mainMenu;
     std::vector<ShoppingList> shoppingLists;
@@ -81,21 +79,20 @@ int getInt() {
     return atoi(line.c_str());
 }
 
-
 void addShoppingList(std::vector<ShoppingList>& list) {
     /*allows to add a new shopping list*/
     std::cout << "Podaj nazwe nowej listy: ";
     std::string newListName = getStringLine();
     ShoppingList newList(newListName);
     list.push_back(newList);
-    std::cout << "Dodano nowa liste '" << list.back().getName()<< "' Aktualna liczba list to: " << list.size() << std::endl;
+    std::cout << "Dodano nowa liste '" << list.back().getShoppingListName()<< "' Aktualna liczba list to: " << list.size() << std::endl;
 }
 
 void showShoppingLists(std::vector<ShoppingList>& list) {
     /*show all existing shopping lists. Unused directly in main menu.*/
     std::cout << "Twoje aktualne listy zakupow:\n";
     for (int i = 0; i < list.size(); i++) {
-        std::cout << i << ". " << list[i].getName() << std::endl;
+        std::cout << i << ". " << list[i].getShoppingListName() << std::endl;
     }
 }
 
@@ -112,16 +109,19 @@ void editShoppingList(std::vector<ShoppingList>& list) {
     showShoppingLists(list);
     std::cout << "Podaj numer listy, ktora chcesz edytowac: " << std::endl;
     int pos = getInt();
-    std::cout << "Podaj nazwe przedmiotu ktory chcesz dodac do listy '" << list[pos].getName() << "': " << std::endl;
-    std::string newItemName = getStringLine();
-    list[pos].addProduct(newItemName);
-   /* std::cout << "Podaj ilos sztuk '" << list[pos]. << "':" << std::endl;
-    int quant = getInt();
-    list[pos].getProduct().changeQuantity(quant);
-    std::cout << "Pomyslnie dodano '" << list[pos].getProduct().getProductName() << "' w ilosci " << quant << " sztuk." << std::endl;*/
-
+    if (list[pos].getDefaultCapacity() > list[pos].getElementsCounter())
+    {
+        std::cout << "Podaj nazwe przedmiotu ktory chcesz dodac do listy '" << list[pos].getShoppingListName() << "': " << std::endl;
+        std::string newItemName = getStringLine();
+        std::cout << "Podaj ilos sztuk '" << newItemName << "':" << std::endl;
+        int quant = getInt();
+        list[pos].addProduct(newItemName, quant);
+    }
+    else {
+        std::cout << "Nie mozesz dodac do listy wecej niz 10 produktow!" << std::endl;
+        return;
+    }
 }
-
 
 void showShoppingList(std::vector<ShoppingList>& list)
 {
@@ -130,16 +130,6 @@ void showShoppingList(std::vector<ShoppingList>& list)
     int pos = getInt();
 
     list[pos].printListProducts();
-
-
-    //for (int i = 0; i < list[pos].getCountElements(); ++i) {
-
-    //    std::string name = list[pos].pr
-    //    int quant = list[pos].getProduct(i).getProductQuantity();
-
-    //    std::cout << i << ". " << name << " - " << quant << " sztuk" << std::endl;
-    //}
-
 }
 
 

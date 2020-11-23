@@ -6,15 +6,12 @@
 #include "ShoppingList.h"
 #include <iostream>
 
-
 // constructor
-
-ShoppingList::ShoppingList(std::string _name, int _capacity) : name(_name), capacity(_capacity), countElements(0)
+ShoppingList::ShoppingList(std::string _name, int _capacity) : name(_name), capacity(_capacity), elementsCounter(0)
 {
 	std::cout << "		system message: constructor is working!\n";
 	products = new Product[capacity];
 }
-
 
 // copy construcotr
 ShoppingList::ShoppingList(const ShoppingList& source)
@@ -22,7 +19,7 @@ ShoppingList::ShoppingList(const ShoppingList& source)
 	std::cout << "		system message: copy constructor is working!\n";
 
 	this->name = source.name;
-	this->countElements = source.countElements;
+	this->elementsCounter = source.elementsCounter;
 	this->capacity = source.capacity;
 
 	// allocating new Product to provide new memory adress
@@ -32,7 +29,6 @@ ShoppingList::ShoppingList(const ShoppingList& source)
 		this->products[i] = source.products[i];
 	}
 }
-
 
 // overloaded '=' operator
 ShoppingList& ShoppingList::operator=(const ShoppingList& source)
@@ -52,7 +48,7 @@ ShoppingList& ShoppingList::operator=(const ShoppingList& source)
 	products = new Product[capacity];
 
 	this->name = source.name;
-	this->countElements = source.countElements;
+	this->elementsCounter = source.elementsCounter;
 	this->capacity = source.capacity;
 
 	
@@ -71,110 +67,42 @@ ShoppingList::~ShoppingList()
 	delete[] products;
 }
 
-void ShoppingList::addProduct(const std::string& name)
+void ShoppingList::addProduct(const std::string& name, int quant)
 {
-	if (countElements == capacity) {
+	if (elementsCounter == capacity) {
 		std::cout << "Shopping lis if full!";
 	}
 	else {
-		products[countElements] = name;
-		countElements++;
+		products[elementsCounter].changeProductName(name);
+		products[elementsCounter].changeQuantity(quant);
+		elementsCounter++;
 	}
 }
-
 
 void ShoppingList::printListProducts() {
 	std::cout << "'" << name << "' shopping list has following elements:\n";
-	for (int i = 0; i < countElements; ++i) {
-		std::cout << i << ". " << products[i].getName() << std::endl;
+	for (int i = 0; i < elementsCounter; ++i) {
+		std::cout << i << ". " << products[i].getProductName() << " | " << products[i].getQuantity() <<std::endl;
 	}
 }
 
-std::string ShoppingList::getName()
+std::string ShoppingList::getShoppingListName()
 {
 	return name;
 }
 
-
-int ShoppingList::getCountElements()
+int ShoppingList::getElementsCounter()
 {
-	return countElements;
+	return elementsCounter;
 }
 
+Product ShoppingList::getProducts()
+{
+	return *products;
+}
 
+int ShoppingList::getDefaultCapacity() const
+{
+	return DEFAULT_CAPACITY;
+}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//#include "ShoppingList.h"
-//#include <iostream>
-//
-//// konstruktor zwyk³y
-//ShoppingList::ShoppingList(std::string name) : name(name)
-//{
-//	products = new Product[maxElements];
-//}
-//
-//// konstruktor kopiujacy
-//ShoppingList::ShoppingList(const ShoppingList& sl)
-//{
-//	name = sl.name;
-//	products = new Product[maxElements];
-//	for (int i = 0; i < maxElements; ++i) {
-//		products[i] = sl.products[i];
-//
-//	}
-//	std::cout << "Dziala konstruktor kopiujacy";
-//}
-//
-//
-//// kopiuj¹cy operator przypisania
-//ShoppingList& ShoppingList::operator=(const ShoppingList& sl)
-//{
-//	if (&sl != this) {
-//
-//		delete[] products;
-//
-//		name = sl.name;
-//		products = new Product[maxElements];
-//		for (int i = 0; i < maxElements; ++i) {
-//			products[i] = sl.products[i];
-//		}
-//	}
-//	std::cout << "Pracuje operator przypisania =";
-//	return *this;
-//}
-//
-//// destruktor
-//ShoppingList::~ShoppingList()
-//{
-//	delete[] products;
-//}
-//
-//// pozosta³e metody
-//
-//void ShoppingList::addProduct(Product newProduct)
-//{
-//	if (productsCount < maxElements) products[productsCount++] = newProduct;
-//}
-//
-//
-//std::string ShoppingList::getName()
-//{
-//	return name;
-//}
-//
-//

@@ -14,13 +14,12 @@ private:
 
     std::string name;
     Product *products;
-    int countElements; // TODO zmieniæ nazwê!! na jakiœ elementsCounter czy coœ
+    int elementsCounter; 
     int capacity;
 
     static const int DEFAULT_CAPACITY = 10;
     
 public:
-
 
     // constructor
     ShoppingList(std::string name, int cap = DEFAULT_CAPACITY);
@@ -34,13 +33,12 @@ public:
     // destructor
     ~ShoppingList();
 
+    void addProduct(const std::string& name, int quant);
+    void printListProducts(); // TODO nielogiczna nazwa
+    std::string getShoppingListName();
+    int getElementsCounter(); 
+    Product getProducts();
 
-    void addProduct(const std::string& name);
-
-
-    void printListProducts(); // TODO kolejna okropnie nielogiczna nazwa :(((
-    std::string getName();
-    int getCountElements(); //TODO zmieniæ nazwê tej metody bo jest okropnie nielogiczna
-
+    int getDefaultCapacity() const;
 };
 #endif //WGGIOS_SHOPPING_LIST_SHOPPINGLIST_H

@@ -6,29 +6,32 @@
 
 Product::Product()
 {
-	quantity = 1;
 }
 
 Product::Product(std::string name) : name(name)
 {
-	quantity = 1;
+	quantity = 0;
 }
 
-std::string Product::getName() {
+Product::Product(std::string name, int quant) : name(name), quantity(quant)
+{
+}
+
+std::string Product::getProductName() {
 	return name;
 }
 int Product::getQuantity() {
 	return quantity;
 }
 
-void Product::changeName(std::string name)
+void Product::changeProductName(std::string name)
 {
 	this->name = name;
 }
 
-void Product::changeQuantity(int quantity)
+void Product::changeQuantity(int quant)
 {
-	this->quantity = quantity;
+	this->quantity = quant;
 }
 
 

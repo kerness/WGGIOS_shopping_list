@@ -11,16 +11,20 @@ class Product {
 private:
     std::string name;
     int quantity;
+  
 
 public:
     Product();
     Product(std::string name);
+    Product(std::string name, int quant);
 
-    std::string getName();
+    std::string getProductName();
     int getQuantity();
 
-    void changeName(std::string name);
-    void changeQuantity(int quantity);
+
+    // currently unused
+    void changeProductName(std::string name);
+    void changeQuantity(int quant);
 
 };
 
