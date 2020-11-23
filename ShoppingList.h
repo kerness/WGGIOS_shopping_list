@@ -5,40 +5,40 @@
 #ifndef WGGIOS_SHOPPING_LIST_SHOPPINGLIST_H
 #define WGGIOS_SHOPPING_LIST_SHOPPINGLIST_H
 
+#include "Product.h"
 #include <string>
 #include <vector>
-#include "Product.h"
-#include <list>
-
-constexpr int LENGTH = 10;
 
 class ShoppingList {
-
 private:
-    std::string listName;
-    std::vector<Product*> products;
+
+    std::string name;
+    Product *products;
+    int elementsCounter; 
+    int capacity;
+
+    static const int DEFAULT_CAPACITY = 10;
     
-
 public:
+
     // constructor
-    ShoppingList(std::string name);
+    ShoppingList(std::string name, int cap = DEFAULT_CAPACITY);
 
- 
+    // copy constructor
+    ShoppingList(const ShoppingList& source);
 
-    std::string getListName();
+    // overloaded '=' operator
+    ShoppingList& operator=(const ShoppingList& source);
 
-   
+    // destructor
+    ~ShoppingList();
 
-    // to manage products
-    void addProduct(std::string name);
+    void addProduct(const std::string& name, int quant);
+    void printListProducts(); // TODO nielogiczna nazwa
+    std::string getShoppingListName();
+    int getElementsCounter(); 
+    Product getProducts();
 
-    Product getProduct();
-    Product getProduct(int pos);
-
-    int getListSize();
-
-
+    int getDefaultCapacity() const;
 };
-
-
 #endif //WGGIOS_SHOPPING_LIST_SHOPPINGLIST_H
