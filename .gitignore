@@ -4,6 +4,9 @@ cmake-build-debug
 .vs
 out
 
+# JSONs
+CMakeSettings.json
+
 # Prerequisites
 *.d
 

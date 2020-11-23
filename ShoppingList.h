@@ -11,20 +11,36 @@
 
 class ShoppingList {
 private:
+
     std::string name;
     Product *products;
-    int productsCount = -1;
-    enum {maxElements = 10};
+    int countElements; // TODO zmieniæ nazwê!! na jakiœ elementsCounter czy coœ
+    int capacity;
+
+    static const int DEFAULT_CAPACITY = 10;
+    
 public:
-    ShoppingList(std::string name);
-    ShoppingList(const ShoppingList& sl);
-    ShoppingList & operator=(const ShoppingList& sl); 
+
+
+    // constructor
+    ShoppingList(std::string name, int cap = DEFAULT_CAPACITY);
+
+    // copy constructor
+    ShoppingList(const ShoppingList& source);
+
+    // overloaded '=' operator
+    ShoppingList& operator=(const ShoppingList& source);
+
+    // destructor
     ~ShoppingList();
 
-    void addProduct(Product newProduct);
-    
 
+    void addProduct(const std::string& name);
+
+
+    void printListProducts(); // TODO kolejna okropnie nielogiczna nazwa :(((
     std::string getName();
+    int getCountElements(); //TODO zmieniæ nazwê tej metody bo jest okropnie nielogiczna
 
 };
 #endif //WGGIOS_SHOPPING_LIST_SHOPPINGLIST_H

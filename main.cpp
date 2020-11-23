@@ -9,18 +9,21 @@
 #include "Product.h"
 #include "ShoppingList.h"
 
+
 std::string getStringLine();
 int getInt();
 
 void addShoppingList(std::vector<ShoppingList>& list);
 void deleteShoppingList(std::vector<ShoppingList>& list);
 void editShoppingList(std::vector<ShoppingList>& list);
-//void showShoppingList(std::vector<ShoppingList>& list);
+void showShoppingList(std::vector<ShoppingList>& list);
 //
 //// pomocnicza do menu
 void showShoppingLists(std::vector<ShoppingList>& list);
 
 int main() {
+
+    
 
     int mainMenu;
     std::vector<ShoppingList> shoppingLists;
@@ -45,12 +48,14 @@ int main() {
                 addShoppingList(shoppingLists);
                 break;
             case 2:
+                editShoppingList(shoppingLists);
              
                 break;
             case 3:
                 deleteShoppingList(shoppingLists);
                 break;
             case 4:
+                showShoppingList(shoppingLists);
                 
                 break;
             default:
@@ -109,10 +114,32 @@ void editShoppingList(std::vector<ShoppingList>& list) {
     int pos = getInt();
     std::cout << "Podaj nazwe przedmiotu ktory chcesz dodac do listy '" << list[pos].getName() << "': " << std::endl;
     std::string newItemName = getStringLine();
-    list[pos].addProduct()
-    std::cout << "Podaj ilos sztuk '" << list[pos].getProduct().getProductName() << "':" << std::endl;
+    list[pos].addProduct(newItemName);
+   /* std::cout << "Podaj ilos sztuk '" << list[pos]. << "':" << std::endl;
     int quant = getInt();
     list[pos].getProduct().changeQuantity(quant);
-    std::cout << "Pomyslnie dodano '" << list[pos].getProduct().getProductName() << "' w ilosci " << quant << " sztuk." << std::endl;
+    std::cout << "Pomyslnie dodano '" << list[pos].getProduct().getProductName() << "' w ilosci " << quant << " sztuk." << std::endl;*/
 
 }
+
+
+void showShoppingList(std::vector<ShoppingList>& list)
+{
+    showShoppingLists(list);
+    std::cout << "Wybierz liste ktora chcesz wyswietlic: " << std::endl;
+    int pos = getInt();
+
+    list[pos].printListProducts();
+
+
+    //for (int i = 0; i < list[pos].getCountElements(); ++i) {
+
+    //    std::string name = list[pos].pr
+    //    int quant = list[pos].getProduct(i).getProductQuantity();
+
+    //    std::cout << i << ". " << name << " - " << quant << " sztuk" << std::endl;
+    //}
+
+}
+
+
