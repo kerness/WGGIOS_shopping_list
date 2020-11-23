@@ -2,21 +2,21 @@
 // Created by kerness on 18.11.2020.
 //
 
-
 #include "ShoppingList.h"
 #include <iostream>
+#include <iomanip> // setw, setfill
 
 // constructor
 ShoppingList::ShoppingList(std::string _name, int _capacity) : name(_name), capacity(_capacity), elementsCounter(0)
 {
-	std::cout << "		system message: constructor is working!\n";
+	std::cout << "\t\tsystem message: constructor is working!\n";
 	products = new Product[capacity];
 }
 
 // copy construcotr
 ShoppingList::ShoppingList(const ShoppingList& source)
 {
-	std::cout << "		system message: copy constructor is working!\n";
+	std::cout << "\t\tsystem message: copy constructor is working!\n";
 
 	this->name = source.name;
 	this->elementsCounter = source.elementsCounter;
@@ -33,7 +33,7 @@ ShoppingList::ShoppingList(const ShoppingList& source)
 // overloaded '=' operator
 ShoppingList& ShoppingList::operator=(const ShoppingList& source)
 {
-	std::cout << "		system message: overloaded assigment operator is working!\n";
+	std::cout << "\t\tsystem message: overloaded assigment operator is working!\n";
 
 	// to avoid sl1 = sl1
 	if (this == &source)
@@ -51,7 +51,6 @@ ShoppingList& ShoppingList::operator=(const ShoppingList& source)
 	this->elementsCounter = source.elementsCounter;
 	this->capacity = source.capacity;
 
-	
 	// array copying
 	for (int i = 0; i < source.capacity; ++i) {
 		this->products[i] = source.products[i];
@@ -63,14 +62,14 @@ ShoppingList& ShoppingList::operator=(const ShoppingList& source)
 // destructor 
 ShoppingList::~ShoppingList()
 {
-	std::cout << "		system message: destructor is working for '" << this->name << "' of adress #" << this << "\n";
+	std::cout << "\t\tsystem message: destructor is working for '" << this->name << "' of adress #" << this << "\n";
 	delete[] products;
 }
 
 void ShoppingList::addProduct(const std::string& name, int quant)
 {
 	if (elementsCounter == capacity) {
-		std::cout << "Shopping lis if full!";
+		std::cout << "shopping lis if full!";
 	}
 	else {
 		products[elementsCounter].changeProductName(name);
@@ -80,10 +79,16 @@ void ShoppingList::addProduct(const std::string& name, int quant)
 }
 
 void ShoppingList::printListProducts() {
-	std::cout << "'" << name << "' shopping list has following elements:\n";
-	for (int i = 0; i < elementsCounter; ++i) {
-		std::cout << i << ". " << products[i].getProductName() << " | " << products[i].getQuantity() <<std::endl;
+	if (elementsCounter == 0) {
+		std::cout << "sys: this list is empty.\n";
+		return;
 	}
+	std::cout << "sys: '" << name << "' shopping list has following elements:\n";
+	std::cout << std::setfill(char(196)) << std::setw(32) << "\n";
+	for (int i = 0; i < elementsCounter; ++i) {
+		std::cout <<"\t" << i << ". " << products[i].getProductName() << " | " << products[i].getQuantity() <<std::endl;
+	}
+	std::cout << std::setfill(char(196)) << std::setw(32) << "\n";
 }
 
 std::string ShoppingList::getShoppingListName()

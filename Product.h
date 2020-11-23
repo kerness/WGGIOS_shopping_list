@@ -11,7 +11,6 @@ class Product {
 private:
     std::string name;
     int quantity;
-  
 
 public:
     Product();
@@ -20,13 +19,8 @@ public:
 
     std::string getProductName();
     int getQuantity();
-
-
     // currently unused
     void changeProductName(std::string name);
     void changeQuantity(int quant);
-
 };
-
-
 #endif //WGGIOS_SHOPPING_LIST_PRODUCT_H

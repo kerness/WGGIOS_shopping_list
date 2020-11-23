@@ -11,25 +11,19 @@
 
 class ShoppingList {
 private:
-
     std::string name;
     Product *products;
     int elementsCounter; 
     int capacity;
-
     static const int DEFAULT_CAPACITY = 10;
     
 public:
-
     // constructor
     ShoppingList(std::string name, int cap = DEFAULT_CAPACITY);
-
     // copy constructor
     ShoppingList(const ShoppingList& source);
-
     // overloaded '=' operator
     ShoppingList& operator=(const ShoppingList& source);
-
     // destructor
     ~ShoppingList();
 
@@ -38,7 +32,6 @@ public:
     std::string getShoppingListName();
     int getElementsCounter(); 
     Product getProducts();
-
     int getDefaultCapacity() const;
 };
 #endif //WGGIOS_SHOPPING_LIST_SHOPPINGLIST_H
