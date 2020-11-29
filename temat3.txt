@@ -1,0 +1,33 @@
+Temat 3 - Lista zakupów
+Wykorzystane IDE: Visual Studio 2019
+Autor: Bąk Maciej | 400666 geoinf
+
+Pracę rozpocząłem od dokładnej analizy tematu, pomogło w tym wykonanie notatek i rozrysowanie grafu przedstawiającego strukturę programu.
+Następnie zdefiniowałem potrzebne klasy i stworzyłem program do ich obsługi w pliku z funkcją main.
+Na program składają się dwie zdefiniowane klasy obiektów: ShoppingList oraz Product:
+
+    - ShoppingList- klasa definiująca obiekt, jakim jest lista zakupów.
+        Przechowuje w sobie nazwę listy zakupów [name], wskaźnik na obiekt klasy Product [products] (wykorzystany do stworzenia tablicy produktów),
+        dwie zmienne typu int [elementsCounter] oraz [capacity] opisujące odpowiednio ilość elementów w tablicy produktów, oraz pojemność tej tablicy.
+        Statyczna stała int [DEFAULT_CAPACITY] przechowuje domyślną pojemność tablicy wskaźników na Produkty równą 10. Zdefiniowane zostały także 
+        Odpowiednie metody do obsługi niezbędnych funkcjonalności programu. Cechą charakterystyczną tej klasy jest wykorzystanie "the rule of three".
+        Zdefiniowany został w niej konstruktor kopiujący, przeładowany operator przypisania(=) oraz destruktor. 
+        Aktualnie przeładowany operator przypisania nie jest wykorzystywany ze względu na brak stwierdzenia konieczności jego zastosowania. 
+        Jednak w trakcie rozwijania projektu może być użyty np. do kopiowania zawartości list lub przenoszenia ich zawartości między sobą.
+    
+    - Product - klasa definiująca obiekt reprezentujący produkt/przedmiot, jaki można kupić w sklepie
+        W prywatnych elementach klasy znajdują się dwie zmienne [name] oraz [quantity] mogące opisać nazwę produktu i jego ilość. 
+        Zdefiniowane zostały trzy konstruktory, każdy z nich przyjmuje inny zestaw argumentów. Równocześnie każdy z nich ustawia domyślną ilość danego produktu na 0. 
+        Klasa ta ma znacznie prostszą strukturę niż klasa ShoppingList. Dostępne metody pozwalają na zarządzanie prywatnymi składnikami klasy.
+
+Plik main.cpp zawiera główną funkcję main, w które zastosowano instrukcję wyboru switch, 
+która wraz z funkcją printMainMenu (konsolowe GUI) odpowiada za interakcje z użytkownikiem. 
+W zależności od wartości zmiennej sterującej switch'em wywoływana jest odpowiednia funkcja, 
+której nagłówki zdefiniowano przed pętlą główną programu. 
+Program został zabezpieczony przed wywoływaniem nieistniejących elementów list, oraz wpisywaniem znaków zamiast liczb.
+Każda z tych funkcji odpowiada za inna funkcjonalność i wykonuje operacje na obiektach klas. 
+Działanie konstruktora kopiującego, destruktora i przeładowanego operatora przypisania jest sygnalizowane stosownym komunikatem *system message*.
+
+Poprawność działania programu (oraz poprawność kompilacji) została sprawdzona na systemie Windows 10,
+oraz na maszynie wirtualnej z zainstalowanym systemem Linux w dystrybucji UBUNTU.
+

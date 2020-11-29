@@ -1,9 +1,9 @@
-//
-// Created by kerness on 18.11.2020.
-//
-
-#ifndef WGGIOS_SHOPPING_LIST_PRODUCT_H
-#define WGGIOS_SHOPPING_LIST_PRODUCT_H
+/*
+    Created by Maciej Bak on 18.11.2020.
+    Geoinf, 400666
+*/
+#ifndef PRODUCT_H
+#define PRODUCT_H
 
 #include <string>
 
@@ -13,14 +13,13 @@ private:
     int quantity;
 
 public:
-    Product();
+    Product() : quantity(0) {}
     Product(std::string name);
     Product(std::string name, int quant);
 
     std::string getProductName();
     int getQuantity();
-    // currently unused
     void changeProductName(std::string name);
     void changeQuantity(int quant);
 };
-#endif //WGGIOS_SHOPPING_LIST_PRODUCT_H
+#endif //PRODUCT_H

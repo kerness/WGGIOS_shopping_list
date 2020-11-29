@@ -1,13 +1,14 @@
-//
-// Created by kerness on 18.11.2020.
-//
-
-#ifndef WGGIOS_SHOPPING_LIST_SHOPPINGLIST_H
-#define WGGIOS_SHOPPING_LIST_SHOPPINGLIST_H
+/*
+    Created by Maciej Bak on 18.11.2020.
+    Geoinf, 400666
+*/
+#ifndef SHOPPINGLIST_H
+#define SHOPPINGLIST_H
 
 #include "Product.h"
 #include <string>
-#include <vector>
+#include <iostream>
+//#include <vector>
 
 class ShoppingList {
 private:
@@ -27,11 +28,14 @@ public:
     // destructor
     ~ShoppingList();
 
+    // overloaded << operator
+    //friend std::ostream& operator<<(std::ostream& os, const ShoppingList& source);
+
     void addProduct(const std::string& name, int quant);
-    void printListProducts(); // TODO nielogiczna nazwa
+    void printListContents(); 
     std::string getShoppingListName();
     int getElementsCounter(); 
     Product getProducts();
     int getDefaultCapacity() const;
 };
-#endif //WGGIOS_SHOPPING_LIST_SHOPPINGLIST_H
+#endif //SHOPPINGLIST_H
