@@ -28,9 +28,6 @@ public:
     // destructor
     ~ShoppingList();
 
-    // overloaded << operator
-    //friend std::ostream& operator<<(std::ostream& os, const ShoppingList& source);
-
     void addProduct(const std::string& name, int quant);
     void printListContents(); 
     std::string getShoppingListName();

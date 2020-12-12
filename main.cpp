@@ -3,7 +3,7 @@
     Geoinf, 400666
     ------------------------------------------------------------------------------
     Simple, console application created in C++ allows you to manage shopping lists.
-    You are able to add, remove and edit yours lists.
+    You are able to add, remove and edit your lists.
 */
 
 #include <iostream>
@@ -139,8 +139,7 @@ void editShoppingList(std::vector<ShoppingList>& list) {
         std::cout << "sys: an error occurred - undefined input. try again." << std::endl;
         return;
     }
-    if (list[pos].getDefaultCapacity() > list[pos].getElementsCounter()) // if there is less than 10 elements
-    {
+    if (list[pos].getDefaultCapacity() > list[pos].getElementsCounter()) {// if there is less than 10 elements
         std::cout << "sys: type the name for an item which you are going to add to the '" << list[pos].getShoppingListName() << "' shopping list\n\tINPUT: ";
         std::string newItemName = getStringLine();
         std::cout << "sys: set quantity of'" << newItemName << "'.\n\tINPUT: ";

@@ -93,4 +93,3 @@ Product ShoppingList::getProducts() {
 int ShoppingList::getDefaultCapacity() const {
 	return DEFAULT_CAPACITY;
 }
-
