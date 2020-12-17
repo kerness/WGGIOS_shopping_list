@@ -8,10 +8,10 @@
 #include "ProductWeight.h"
 
 ShoppingList::ShoppingList(std::string &_name, int _capacity) : _name(_name), _capacity(_capacity), _elementsCounter(0) {
-    std::cout << "\t\t*system message* constructor is working!\n";
+    //std::cout << "\t\t*system message* constructor is working!\n";
 }
 ShoppingList::~ShoppingList() {
-    std::cout << "\t\t*system message* destructor is working for '" << this->_name << "'\n";
+    //std::cout << "\t\t*system message* destructor is working for '" << this->_name << "'\n";
     for (int i = 0; i < _products.size(); ++i) {
         std::cout << _products[i]->getName() << "jest usuwany" << std::endl;
         delete _products[i];

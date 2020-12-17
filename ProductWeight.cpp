@@ -4,11 +4,12 @@
 
 #include "ProductWeight.h"
 #include <iostream>
+#include <iomanip>
 
 const std::string ProductWeight::_unit = "kilograms";
 
 void ProductWeight::printDetails() {
-    std::cout << _name << "\t|\t" << _quantity << " " << _unit << std::endl;
+    std::cout << std::setw(10) << _name << "\t|\t" << _quantity << " " << _unit << std::endl;
 }
 Product *ProductWeight::createNew(std::string name, int quantity) {
     return new ProductWeight(name, quantity);

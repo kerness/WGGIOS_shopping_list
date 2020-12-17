@@ -10,6 +10,7 @@
 
 class ProductWeight : public Product{
 protected:
+    int _quantity;
     static const std::string _unit;
 
 public:

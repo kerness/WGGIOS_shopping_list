@@ -4,11 +4,13 @@
 #include <iomanip> // setw, setfill
 #include <limits> // cin.ignore argument
 #include <climits> // INT_MAX
+//#include <cmath>// floorf
 #include "ShoppingList.h"
 
 // input functions
 std::string getStringLine ();
 int getInt ();
+int getAndStoreFloat();
 // user interaction functions
 void addShoppingList(std::vector<ShoppingList>& list);
 void deleteShoppingList(std::vector<ShoppingList>& list);
@@ -17,7 +19,10 @@ void showShoppingList(std::vector<ShoppingList>& list);
 void showShoppingLists(std::vector<ShoppingList>& list);
 void printMainMenu();
 void printSubMenu();
-int showStringAndGetInt();
+//int showStringAndGetInt();
+
+void addProductToShoppingList(std::vector<ShoppingList>& list, int listPos);
+void mergeShoppingLists(std::vector<ShoppingList>& list, int listPos);
 
 int main() {
     int mainMenu;
@@ -58,7 +63,7 @@ int main() {
                 return 0;
             default:
                 std::cout << "sys: you are not allowed to do it." << std::endl; // other input
-                mainMenu = 6;
+                mainMenu = 6; // TODO weird stuff
                 break;
         }
     } while (true);
@@ -89,6 +94,15 @@ int getInt() {
     else
         return intInput;
 }
+
+//int getAndStoreFloat() {
+//    /*gets a float number and store as int*/
+//    std::string input;
+//    std::getline(std::cin, input);
+//    float inputFloat = std::stof(input);
+//    inputFloat
+//
+//}
 
 void addShoppingList(std::vector<ShoppingList>& list) {
     /*allows to add a new shopping list at the back of the list*/
@@ -121,6 +135,19 @@ void deleteShoppingList(std::vector<ShoppingList>& list) {
     std::cout << "sys: '" << pos << "' was deleted successfully" << std::endl;
 }
 
+void showShoppingList(std::vector<ShoppingList>& list) {
+    /*prints out contents (products) of shopping list */
+    showShoppingLists(list);
+    std::cout << "sys: choose number of an list which you are wanted to show. \n\tINPUT: ";
+    int pos = getInt();
+    if (pos == -1 || pos >= list.size()) { // check if input is out of an range. if yes:  returns to main menu
+        std::cout << "sys: an error occurred - input out of range. try again." << std::endl;
+        return;
+    }
+    list[pos].printListContents();
+}
+
+
 void editShoppingList(std::vector<ShoppingList>& list) {
     /*allows to edit shopping list - by now, just adding new products*/
     showShoppingLists(list);  // prints list of shopping lists
@@ -130,8 +157,37 @@ void editShoppingList(std::vector<ShoppingList>& list) {
         std::cout << "sys: an error occurred - undefined input. try again." << std::endl;
         return;
     }
-    if (list[pos].getDefaultCapacity() > list[pos].getElementsCounter()) {// if there is less than 10 elements
-        std::cout << "sys: you are editing '" <<list[pos].getShoppingListName() << "' list." << std::endl;
+
+    bool subMenu = true;
+
+    do {
+        printSubMenu();
+        int subMenuNum =getInt();
+        switch (subMenuNum) {
+            case 1:
+                addProductToShoppingList(list, pos);
+                break;
+            case 2:
+                std::cout << "nothing herey" << std::endl;
+                break;
+            case 3:
+                std::cout << "nothing here" << std::endl;
+                break;
+            case 4:
+                subMenu = false;
+                break;
+            default:
+                std::cout << "sys: an error occurred - undefined input. try again." << std::endl;
+                subMenu = false;
+                break;
+        }
+    } while (subMenu);
+
+}
+
+void addProductToShoppingList(std::vector<ShoppingList>& list, int listPos) {
+    if (list[listPos].getDefaultCapacity() > list[listPos].getElementsCounter()) {// if there is less than 10 elements
+        std::cout << "sys: you are editing '" <<list[listPos].getShoppingListName() << "' list." << std::endl;
         std::cout << "sys: there are three item categories. choose one which is the most suitable for your product" << std::endl;
         std::cout << "|" << std::setw(10) << " 1. pieces[pcs] |" << " 2. weight[kg] |" << " 3. liters[l] |" << std::endl;
         int categoryNum = getInt();
@@ -145,26 +201,16 @@ void editShoppingList(std::vector<ShoppingList>& list) {
         std::cout << "sys: set quantity of'" << newItemName << "'.\n\tINPUT: ";
         int quant = getInt();
 
-        list[pos].addProduct(categoryNum, newItemName, quant);
+        list[listPos].addProduct(categoryNum, newItemName, quant);
     }
     else {
         std::cout << "sys: shopping list is full. you can't add more than 10 items." << std::endl;
         return;
     }
-
-
 }
 
-void showShoppingList(std::vector<ShoppingList>& list) {
-    /*prints out contents (products) of shopping list */
-    showShoppingLists(list);
-    std::cout << "sys: choose number of an list which you are wanted to show. \n\tINPUT: ";
-    int pos = getInt();
-    if (pos == -1 || pos >= list.size()) { // check if input is out of an range. if yes:  returns to main menu
-        std::cout << "sys: an error occurred - input out of range. try again." << std::endl;
-        return;
-    }
-    list[pos].printListContents();
+void mergeShoppingLists(std::vector<ShoppingList>& list, int listPos) {
+
 }
 
 void printMainMenu() {
@@ -195,9 +241,10 @@ void printSubMenu() {
     std::cout << std::setfill(' ') << '|' << std::setw(6)   << "      1. add new product"   << std::setw(6) << '|' << std::endl;
     std::cout << std::setfill(' ') << '|' << std::setw(6)   << "      2. move product "     << std::setw(8) << '|' << std::endl;
     std::cout << std::setfill(' ') << '|' << std::setw(6)   << "      3. merge lists"       << std::setw(10) << '|' << std::endl;
-    std::cout << std::setfill(' ') << '|' << std::setw(6)   << "      4. exit "             << std::setw(16) << '|' << std::endl;
+    std::cout << std::setfill(' ') << '|' << std::setw(6)   << "      4. exit "             << std::setw(16) << '|' << std::endl; // TODO zmienić na return to main menu
     // footer
     std::cout << std::setfill('-') << '|' << std::setw(30)  << '|'                          << std::endl;
     std::cout << std::setfill(' ') << '|' << std::setw(6)   << "      choose action..."     << std::setw(8) << '|' << std::endl;
     std::cout << std::setfill('-') << '+' << std::setw(30)  << '+'                          << std::endl;
 }
+
