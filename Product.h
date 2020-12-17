@@ -1,25 +1,28 @@
-/*
-    Created by Maciej Bak on 18.11.2020.
-    Geoinf, 400666
-*/
-#ifndef PRODUCT_H
-#define PRODUCT_H
+//
+// Created by maciek on 16.12.2020.
+//
 
+#ifndef SHOPPING_LIST_PRODUCT_H
+#define SHOPPING_LIST_PRODUCT_H
 #include <string>
 
 class Product {
-private:
-    std::string name;
-    int quantity;
-
+protected:
+    std::string _name;
+    static const std::string _unit;
+    int _quantity;
 public:
-    Product() : quantity(0) {}
-    Product(std::string name);
-    Product(std::string name, int quant);
-
-    std::string getProductName();
+    explicit Product(std::string name = "unknown", int quantity = 0) : _name(name), _quantity(quantity) {}
+    virtual ~Product();
+    std::string getName();
+    std::string getUnit();
     int getQuantity();
-    void changeProductName(std::string name);
-    void changeQuantity(int quant);
+    void setQuantity(int quantity);
+    void setName(std:: string& name);
+    virtual Product* createNew(std::string name, int quantity) = 0;
+    virtual void printDetails() = 0;
+
+
 };
-#endif //PRODUCT_H
+
+#endif //SHOPPING_LIST_PRODUCT_H

@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.16)
-project(BakMaciej-etap1)
+project(shopping_list)
 
-set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD 14)
 
-add_executable(BakMaciej-etap1 main.cpp ShoppingList.cpp Product.cpp)
+add_executable(shopping_list main.cpp Product.cpp Product.h ShoppingList.cpp ShoppingList.h ProductPieces.cpp ProductPieces.h ProductWeight.cpp ProductWeight.h ProductLiters.cpp ProductLiters.h)

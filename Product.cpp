@@ -1,29 +1,33 @@
-/*
-    Created by Maciej Bak on 18.11.2020.
-    Geoinf, 400666
-*/
+//
+// Created by maciek on 16.12.2020.
+//
+
 #include "Product.h"
 
-Product::Product(std::string name) : name(name) {
-    quantity = 0;
+#include <iostream>
+
+const std::string Product::_unit = "undefined";
+
+Product::~Product() {
+
 }
 
-Product::Product(std::string name, int quant) : name(name), quantity(quant) {
+std::string Product::getName() {
+    return _name;
 }
 
-std::string Product::getProductName() {
-    return name;
+std::string Product::getUnit() {
+    return _unit;
 }
 
 int Product::getQuantity() {
-    return quantity;
+    return _quantity;
 }
 
-void Product::changeProductName(std::string name) {
-    this->name = name;
+void Product::setQuantity(int quantity) {
+    this->_quantity = quantity;
 }
 
-void Product::changeQuantity(int quant) {
-    this->quantity = quant;
+void Product::setName(std::string &name) {
+    this->_name = name;
 }
-
