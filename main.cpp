@@ -22,7 +22,8 @@ void printSubMenu();
 //int showStringAndGetInt();
 
 void addProductToShoppingList(std::vector<ShoppingList>& list, int listPos);
-void mergeShoppingLists(std::vector<ShoppingList>& list, int listPos);
+void mergeShoppingLists(std::vector<ShoppingList>& list, int listToMerge); // nie działa
+void moveProductToAnotherShoppingList(std::vector<ShoppingList>& lists, int fromIndex);
 
 int main() {
     int mainMenu;
@@ -168,10 +169,11 @@ void editShoppingList(std::vector<ShoppingList>& list) {
                 addProductToShoppingList(list, pos);
                 break;
             case 2:
-                std::cout << "nothing herey" << std::endl;
+                moveProductToAnotherShoppingList(list, pos);
                 break;
             case 3:
-                std::cout << "nothing here" << std::endl;
+                // TODO create merging here ! ! !
+                mergeShoppingLists(list, pos);
                 break;
             case 4:
                 subMenu = false;
@@ -209,7 +211,33 @@ void addProductToShoppingList(std::vector<ShoppingList>& list, int listPos) {
     }
 }
 
-void mergeShoppingLists(std::vector<ShoppingList>& list, int listPos) {
+void mergeShoppingLists(std::vector<ShoppingList>& list, int listToMerge) {
+    std::cout << "sys: choose number of a list to merge with '" << list[listToMerge].getShoppingListName() << "'" << std::endl;
+    showShoppingList(list);
+    printf("'.\n\tINPUT: ");
+    int mergeWith = getInt();
+
+    list[listToMerge] += list[mergeWith];
+    std::cout << "sys: shopping list named '" << list[listToMerge].getShoppingListName() << "'" << "after merging with '" << list[mergeWith].getShoppingListName() << "'" << std::endl;
+    list[listToMerge].printListContents();
+}
+
+void moveProductToAnotherShoppingList(std::vector<ShoppingList>& lists, int fromIndex) {
+    if(lists[fromIndex].isEmpty()) { // prevent from doing something with empty list
+        std::cout << "sys: you can not move product from an empty list." << std::endl;
+        return;
+    }
+    std::cout << "sys: choose number of a product to move product from '" << lists[fromIndex].getShoppingListName() << "'" << std::endl;
+    lists[fromIndex].printListContents();
+    int productToMove = getInt();
+    std::cout << "sys: choose number of a list to move selected product'" << std::endl;
+    showShoppingLists(lists);
+    int destinationIndex = getInt();
+    if(destinationIndex == fromIndex) { // prevent form moving product form THIS list to THIS list
+        std::cout << "sys: you can not move product to the same list." << std::endl;
+        return;
+    }
+    lists[fromIndex].moveProduct(lists[destinationIndex], productToMove);
 
 }
 

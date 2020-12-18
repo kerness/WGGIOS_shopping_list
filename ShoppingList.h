@@ -43,6 +43,13 @@ public:
     ShoppingList& operator+=(const ShoppingList& source);
 
     void mergeLists(ShoppingList& toMerge);
+    void moveProduct(ShoppingList& destination, int productIndex);
+
+    Product* getProdctByIndex(int index) {
+        return _products[index];
+    }
+
+    bool isEmpty();
 
 };
 
