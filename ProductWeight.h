@@ -6,18 +6,15 @@
 #define SHOPPING_LIST_PRODUCTWEIGHT_H
 #include "Product.h"
 
-
-
 class ProductWeight : public Product{
 protected:
-
     static const std::string _unit;
 
 public:
-    ProductWeight(std::string name = "undefined", int quantity = 0) : Product(name, quantity) {}
-    ~ProductWeight(){}
+    explicit ProductWeight(std::string name = "undefined", int quantity = 0) : Product(name, quantity) {}
+    ~ProductWeight() override = default;
     void printDetails() override;
-    Product* createNew(std::string name, int quantity) override;
+    //Product* createNew(std::string name, int quantity) override;
 };
 
 #endif //SHOPPING_LIST_PRODUCTWEIGHT_H

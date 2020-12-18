@@ -19,9 +19,9 @@ public:
     int getQuantity();
     void setQuantity(int quantity);
     void setName(std:: string& name);
-    virtual Product* createNew(std::string name, int quantity) = 0;
     virtual void printDetails() = 0;
 
+    //virtual Product* createNew(std::string name, int quantity) = 0;
 
 };
 

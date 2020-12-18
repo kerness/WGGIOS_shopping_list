@@ -7,15 +7,13 @@
 #include "ProductLiters.h"
 #include "ProductWeight.h"
 #include <vector>
+#include <string>
 
 ShoppingList::ShoppingList(std::string &_name, int _capacity) : _name(_name), _capacity(_capacity), _elementsCounter(0) {
-    //std::cout << "\t\t*system message* constructor is working!\n";
 }
 ShoppingList::~ShoppingList() {
-    //std::cout << "\t\t*system message* destructor is working for '" << this->_name << "'\n";
-    for (int i = 0; i < _products.size(); ++i) {
-        //std::cout << _products[i]->getName() << "jest usuwany" << std::endl;
-        delete _products[i];
+    for (auto & p : _products) {
+        delete p;
     }
     std::vector<Product*>().swap(_products);
 }
@@ -33,7 +31,8 @@ std::vector<Product*> ShoppingList::getProducts() {
 }
 
 void ShoppingList::addProduct(int categoryNum, const std::string &name, int quant) {
-    if (_elementsCounter == _capacity)
+    //if (_elementsCounter == _capacity)
+    if (_products.size() == _capacity)
         printf("sys: shopping list if full!");
     else {
         Product* productPointer;
@@ -53,22 +52,17 @@ void ShoppingList::addProduct(int categoryNum, const std::string &name, int quan
                 return;
         }
         _products.push_back(productPointer);
-        _elementsCounter++;
+        //_elementsCounter++;
     }
 }
 
 void ShoppingList::printListContents() {  // TU BYL BUG NIE MOZNA KORZYSTAC Z _ELEMENST CIUNTR TYLKO  Z _PRODUCTS.SIZE!
-//    if (_elementsCounter == 0) {
-//        std::cout << "sys: this list is empty.\n";
-//        return;
-//    }
     if (_products.empty()) {
         std::cout << "sys: this list is empty.\n";
         return;
     }
     std::cout << "sys: '" << _name << "' shopping list has following elements:\n";
     std::cout << std::setfill('-') << std::setw(32) << "\n";
-    //std::cout << std::setw(10) << std::setfill(' ') << "lp" << "\t|\t" << "name" << "\t|\t" << "quantity" << "\t|\t" << "category" << std::endl;
     for (int i = 0; i < _products.size(); ++i) {
         std::cout << i << std::setfill(' ');
         _products[i]->printDetails();
@@ -76,30 +70,27 @@ void ShoppingList::printListContents() {  // TU BYL BUG NIE MOZNA KORZYSTAC Z _E
     std::cout << std::setfill('-') << std::setw(32) << "\n";
 }
 
-void ShoppingList::mergeLists(ShoppingList& toMerge) {
-
-
+bool ShoppingList::isAnyProductEqual(ShoppingList &toCompare) {
+    /*check if there is any product equal by name and unit in two shopping lists*/
+    bool isAnyElementEqual = false;
+    for (auto & p1 : this->_products) {
+        for (auto & p2 : toCompare._products) {
+            if (p1->getName() == p2->getName() &&
+                p1->getUnit() == p2->getUnit() )
+                isAnyElementEqual = true;
+        }
+    }
+    return isAnyElementEqual;
 }
 
-ShoppingList &ShoppingList::operator+=(const ShoppingList &toMerge) {
-    std::cout << "\t\t*system message* overloaded assignment operator is working!\n";
-
-    if (this->_elementsCounter >= toMerge._elementsCounter) {
-        for (int i = 0; i < this->_elementsCounter; ++i) {
-            if (this->_products[i]->getName() == toMerge._products[i]->getName()) {
-                this->_products[i]->setQuantity(this->_products[i]->getQuantity() + toMerge._products[i]->getQuantity());
-            }
-        }
-    }
-    else { //if this->_elementsCounter < toMerge._elementsCounter
-        for (int i = 0; i < toMerge._elementsCounter; ++i) {
-            if (this->_products[i]->getName() == toMerge._products[i]->getName()) {
-                this->_products[i]->setQuantity(this->_products[i]->getQuantity() + toMerge._products[i]->getQuantity());
-            }
-        }
-    }
-
-    return *this;
+// TODO w trakcie tworzenia
+ShoppingList &ShoppingList::operator+=(const ShoppingList &source) {
+    this->_capacity += source._capacity;
+    this->_elementsCounter += source._elementsCounter;
+    this->_name = "Merged_" + this->_name + "_" +source._name;
+    //this->_products.reserve(this->_products.size() + source._products.size());
+    this->_products.insert(this->_products.end(), source._products.begin(), source._products.end());
+   return *this;
 }
 
 void ShoppingList::moveProduct(ShoppingList &destination, int productIndex) {
@@ -116,7 +107,6 @@ void ShoppingList::moveProduct(ShoppingList &destination, int productIndex) {
 }
 
 bool ShoppingList::isEmpty() {
-
     if(_products.empty())
         return true;
     else

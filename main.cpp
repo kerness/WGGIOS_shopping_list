@@ -19,7 +19,7 @@ void showShoppingList(std::vector<ShoppingList>& list);
 void showShoppingLists(std::vector<ShoppingList>& list);
 void printMainMenu();
 void printSubMenu();
-//int showStringAndGetInt();
+
 
 void addProductToShoppingList(std::vector<ShoppingList>& list, int listPos);
 void mergeShoppingLists(std::vector<ShoppingList>& list, int listToMerge); // nie działa
@@ -48,7 +48,7 @@ int main() {
                 if (!shoppingLists.empty()) // if not empty
                     deleteShoppingList(shoppingLists);
                 else {
-                    std::cout << "sys: i have hothing to delete" << std::endl;
+                    std::cout << "sys: i have nothing to delete" << std::endl;
                     break;
                 }
                 break;
@@ -69,7 +69,6 @@ int main() {
         }
     } while (true);
 }
-
 
 std::string getStringLine() {
     /*gets a string form std input
@@ -95,15 +94,6 @@ int getInt() {
     else
         return intInput;
 }
-
-//int getAndStoreFloat() {
-//    /*gets a float number and store as int*/
-//    std::string input;
-//    std::getline(std::cin, input);
-//    float inputFloat = std::stof(input);
-//    inputFloat
-//
-//}
 
 void addShoppingList(std::vector<ShoppingList>& list) {
     /*allows to add a new shopping list at the back of the list*/
@@ -211,15 +201,31 @@ void addProductToShoppingList(std::vector<ShoppingList>& list, int listPos) {
     }
 }
 
+// TODO w trakcie tworzenia
 void mergeShoppingLists(std::vector<ShoppingList>& list, int listToMerge) {
     std::cout << "sys: choose number of a list to merge with '" << list[listToMerge].getShoppingListName() << "'" << std::endl;
-    showShoppingList(list);
-    printf("'.\n\tINPUT: ");
+    showShoppingLists(list);
+    printf("\tINPUT: ");
     int mergeWith = getInt();
 
-    list[listToMerge] += list[mergeWith];
-    std::cout << "sys: shopping list named '" << list[listToMerge].getShoppingListName() << "'" << "after merging with '" << list[mergeWith].getShoppingListName() << "'" << std::endl;
-    list[listToMerge].printListContents();
+    std::cout << "łączę " << list[listToMerge].getShoppingListName() << " z " << list[mergeWith].getShoppingListName() << std::endl;
+
+    if (list[listToMerge].isAnyProductEqual(list[mergeWith]))
+
+        // do smart merging with metod
+        printf("\n COS MA TAKA SAMA NAZWE i typ\n");
+    else {
+
+        // do dumn merging with += operator
+        printf("nic nie ma takiej samej nazyw i typu\n");
+
+        list[listToMerge] += list[mergeWith];
+
+        std::cout << "nowa lista" << list[listToMerge].getShoppingListName();
+        std::cout << "lista do usuniecia" << list[mergeWith].getShoppingListName();
+        //list.erase(list.begin() + mergeWith);
+        list[listToMerge].printListContents();
+    }
 }
 
 void moveProductToAnotherShoppingList(std::vector<ShoppingList>& lists, int fromIndex) {
@@ -238,7 +244,6 @@ void moveProductToAnotherShoppingList(std::vector<ShoppingList>& lists, int from
         return;
     }
     lists[fromIndex].moveProduct(lists[destinationIndex], productToMove);
-
 }
 
 void printMainMenu() {

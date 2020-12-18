@@ -7,15 +7,14 @@
 #include "Product.h"
 
 class ProductPieces : public Product{
-public:
 protected:
     static const std::string _unit;
 
 public:
-    ProductPieces(std::string name = "undefined", int quantity = 0) : Product(name, quantity) {}
-    ~ProductPieces(){}
+    explicit ProductPieces(std::string name = "undefined", int quantity = 0) : Product(name, quantity) {}
+    ~ProductPieces() override = default;
     void printDetails() override;
-    Product* createNew(std::string name, int quantity) override;
+    //Product* createNew(std::string name, int quantity) override;
 };
 
 #endif //SHOPPING_LIST_PRODUCTPIECES_H

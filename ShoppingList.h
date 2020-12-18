@@ -14,7 +14,7 @@
 #include <vector>
 #include <string>
 
-
+// TODO zamienić _products.size() na metodę
 
 
 class ShoppingList {
@@ -41,16 +41,11 @@ public:
     void addProduct(int categoryNum, const std::string& name, int quant);
     void printListContents();
     ShoppingList& operator+=(const ShoppingList& source);
-
-    void mergeLists(ShoppingList& toMerge);
     void moveProduct(ShoppingList& destination, int productIndex);
+    void mergeLists(ShoppingList& toMerge);
 
-    Product* getProdctByIndex(int index) {
-        return _products[index];
-    }
-
+    bool isAnyProductEqual(ShoppingList& toCompare);
     bool isEmpty();
-
 };
 
 #endif //SHOPPING_LIST_SHOPPINGLIST_H
