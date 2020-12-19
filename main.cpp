@@ -7,6 +7,20 @@
 //#include <cmath>// floorf
 #include "ShoppingList.h"
 
+
+
+
+
+// TODO sprawdzanie poprawności wpisania liczb! ! ! ! !
+
+
+
+
+
+
+
+
+
 // input functions
 std::string getStringLine ();
 int getInt ();
@@ -20,19 +34,17 @@ void showShoppingLists(std::vector<ShoppingList>& list);
 void printMainMenu();
 void printSubMenu();
 
-
 void addProductToShoppingList(std::vector<ShoppingList>& list, int listPos);
 void mergeShoppingLists(std::vector<ShoppingList>& list, int listToMerge); // nie działa
 void moveProductToAnotherShoppingList(std::vector<ShoppingList>& lists, int fromIndex);
 
 int main() {
-    int mainMenu;
     std::vector<ShoppingList> shoppingLists;
+    bool mainMenu = true;
     do {
-        //printSubMenu();
         printMainMenu();
-        mainMenu = getInt();
-        switch (mainMenu) {
+        int mainMenuNum = getInt();
+        switch (mainMenuNum) {
             case 1:
                 addShoppingList(shoppingLists);
                 break;
@@ -61,13 +73,14 @@ int main() {
                 }
                 break;
             case 5:
-                return 0;
+                mainMenu = false;
+                break;
             default:
                 std::cout << "sys: you are not allowed to do it." << std::endl; // other input
-                mainMenu = 6; // TODO weird stuff
                 break;
         }
-    } while (true);
+    } while (mainMenu);
+    return 0;
 }
 
 std::string getStringLine() {
@@ -148,9 +161,7 @@ void editShoppingList(std::vector<ShoppingList>& list) {
         std::cout << "sys: an error occurred - undefined input. try again." << std::endl;
         return;
     }
-
     bool subMenu = true;
-
     do {
         printSubMenu();
         int subMenuNum =getInt();
@@ -174,7 +185,6 @@ void editShoppingList(std::vector<ShoppingList>& list) {
                 break;
         }
     } while (subMenu);
-
 }
 
 void addProductToShoppingList(std::vector<ShoppingList>& list, int listPos) {
@@ -201,33 +211,6 @@ void addProductToShoppingList(std::vector<ShoppingList>& list, int listPos) {
     }
 }
 
-// TODO w trakcie tworzenia
-void mergeShoppingLists(std::vector<ShoppingList>& list, int listToMerge) {
-    std::cout << "sys: choose number of a list to merge with '" << list[listToMerge].getShoppingListName() << "'" << std::endl;
-    showShoppingLists(list);
-    printf("\tINPUT: ");
-    int mergeWith = getInt();
-
-    std::cout << "łączę " << list[listToMerge].getShoppingListName() << " z " << list[mergeWith].getShoppingListName() << std::endl;
-
-    if (list[listToMerge].isAnyProductEqual(list[mergeWith]))
-
-        // do smart merging with metod
-        printf("\n COS MA TAKA SAMA NAZWE i typ\n");
-    else {
-
-        // do dumn merging with += operator
-        printf("nic nie ma takiej samej nazyw i typu\n");
-
-        list[listToMerge] += list[mergeWith];
-
-        std::cout << "nowa lista" << list[listToMerge].getShoppingListName();
-        std::cout << "lista do usuniecia" << list[mergeWith].getShoppingListName();
-        //list.erase(list.begin() + mergeWith);
-        list[listToMerge].printListContents();
-    }
-}
-
 void moveProductToAnotherShoppingList(std::vector<ShoppingList>& lists, int fromIndex) {
     if(lists[fromIndex].isEmpty()) { // prevent from doing something with empty list
         std::cout << "sys: you can not move product from an empty list." << std::endl;
@@ -244,6 +227,23 @@ void moveProductToAnotherShoppingList(std::vector<ShoppingList>& lists, int from
         return;
     }
     lists[fromIndex].moveProduct(lists[destinationIndex], productToMove);
+}
+
+void mergeShoppingLists(std::vector<ShoppingList>& list, int listToMerge) {
+    std::cout << "sys: choose number of a list to merge with '" << list[listToMerge].getShoppingListName() << "'" << std::endl;
+    showShoppingLists(list);
+    printf("\tINPUT: ");
+    int mergeWith = getInt();
+    std::cout << "łączę " << list[listToMerge].getShoppingListName() << " z " << list[mergeWith].getShoppingListName() << std::endl;
+    if (list[listToMerge].isAnyProductEqual(list[mergeWith])) {
+        // do smart merging with metod
+        list[listToMerge].smartMergeLists(list[mergeWith]);
+    }
+    else {
+        // do dumb merging with += operator
+        list[listToMerge] += list[mergeWith];
+    }
+    list.erase(list.begin() + mergeWith);
 }
 
 void printMainMenu() {

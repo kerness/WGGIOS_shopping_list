@@ -17,6 +17,18 @@ ShoppingList::~ShoppingList() {
     }
     std::vector<Product*>().swap(_products);
 }
+ShoppingList &ShoppingList::operator+=(const ShoppingList &source) {
+    this->_capacity += source._capacity;
+    this->_elementsCounter += source._elementsCounter;
+    this->_name = "Merged_" + this->_name + "_" +source._name;
+
+    for (int i = 0; i < source._products.size(); ++i) {
+        auto productPointer = this->_products[i];
+        auto productName = source._products[i]->getName();
+        this->createNewProduct(productPointer, source._products[i]->getQuantity(), productName);
+    }
+    return *this;
+}
 std::string ShoppingList::getShoppingListName() {
     return _name;
 }
@@ -26,10 +38,6 @@ int ShoppingList::getElementsCounter() {
 int ShoppingList::getDefaultCapacity() const {
     return DEFAULT_CAPACITY;
 }
-std::vector<Product*> ShoppingList::getProducts() {
-    return _products;
-}
-
 void ShoppingList::addProduct(int categoryNum, const std::string &name, int quant) {
     //if (_elementsCounter == _capacity)
     if (_products.size() == _capacity)
@@ -55,21 +63,19 @@ void ShoppingList::addProduct(int categoryNum, const std::string &name, int quan
         //_elementsCounter++;
     }
 }
-
-void ShoppingList::printListContents() {  // TU BYL BUG NIE MOZNA KORZYSTAC Z _ELEMENST CIUNTR TYLKO  Z _PRODUCTS.SIZE!
+void ShoppingList::printListContents() {
     if (_products.empty()) {
         std::cout << "sys: this list is empty.\n";
         return;
     }
     std::cout << "sys: '" << _name << "' shopping list has following elements:\n";
     std::cout << std::setfill('-') << std::setw(32) << "\n";
-    for (int i = 0; i < _products.size(); ++i) {
+    for (int i = 0; i < this->_products.size(); ++i) {
         std::cout << i << std::setfill(' ');
         _products[i]->printDetails();
     }
     std::cout << std::setfill('-') << std::setw(32) << "\n";
 }
-
 bool ShoppingList::isAnyProductEqual(ShoppingList &toCompare) {
     /*check if there is any product equal by name and unit in two shopping lists*/
     bool isAnyElementEqual = false;
@@ -82,33 +88,32 @@ bool ShoppingList::isAnyProductEqual(ShoppingList &toCompare) {
     }
     return isAnyElementEqual;
 }
-
-// TODO w trakcie tworzenia
-ShoppingList &ShoppingList::operator+=(const ShoppingList &source) {
-    this->_capacity += source._capacity;
-    this->_elementsCounter += source._elementsCounter;
-    this->_name = "Merged_" + this->_name + "_" +source._name;
-    //this->_products.reserve(this->_products.size() + source._products.size());
-    this->_products.insert(this->_products.end(), source._products.begin(), source._products.end());
-   return *this;
-}
-
-void ShoppingList::moveProduct(ShoppingList &destination, int productIndex) {
-    destination._products.push_back(this->_products[productIndex]);
-    this->_products.erase(this->_products.begin() + productIndex);
-//    // CHECKING
-//    std::cout << "przeniesc z " << this->getShoppingListName() << std::endl;
-//    std::cout << "przeniesc to " << this->_products[productIndex] << std::endl;
-//    std::cout << "przeniesc do " << destination.getShoppingListName() << std::endl;
-//    printf("przenies z po przeniesienuu\n");
-//    this->printListContents();
-//    printf("przenies do przeniesieniu\n");
-//    destination.printListContents();
-}
-
 bool ShoppingList::isEmpty() {
     if(_products.empty())
         return true;
     else
         return false;
+}
+void ShoppingList::moveProduct(ShoppingList &destination, int productIndex) {
+    destination._products.push_back(this->_products[productIndex]);
+    this->_products.erase(this->_products.begin() + productIndex);
+}
+void ShoppingList::smartMergeLists(ShoppingList &toMerge) {
+    // dumb merge list first
+    *this += toMerge;
+    // find duplicates and sum quantity
+    for (auto & p1 : this->_products) {
+        for (auto & p2 : toMerge._products) {
+            if (p1->getUnit() == p2->getUnit() &&
+                p1->getName() == p2->getName() ) {
+                p1->setQuantity(p1->getQuantity() + p2->getQuantity());
+            }
+        }
+    }
+}
+void ShoppingList::createNewProduct(Product *type, int quantity, std::string &name) {
+    _products.push_back(type->createNew(name, quantity));
+}
+void ShoppingList::deleteProduct(int index) {
+    this->_products.erase(_products.begin() + index);
 }

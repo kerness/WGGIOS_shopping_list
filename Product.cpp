@@ -6,7 +6,7 @@
 
 #include <iostream>
 
-const std::string Product::_unit = "undefined";
+//const std::string Product::_unit = "undefined";
 
 Product::~Product() {
 

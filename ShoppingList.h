@@ -18,6 +18,7 @@
 
 
 class ShoppingList {
+
 private:
     static const int DEFAULT_CAPACITY = 10;
     int _elementsCounter;
@@ -34,18 +35,21 @@ public:
     //ShoppingList& operator=(const ShoppingList& source);
     // destructor
     ~ShoppingList();
+    ShoppingList& operator+=(const ShoppingList& source);
     std::string getShoppingListName();
     int getElementsCounter();
     int getDefaultCapacity() const;
-    std::vector<Product*> getProducts();
     void addProduct(int categoryNum, const std::string& name, int quant);
     void printListContents();
-    ShoppingList& operator+=(const ShoppingList& source);
     void moveProduct(ShoppingList& destination, int productIndex);
-    void mergeLists(ShoppingList& toMerge);
-
+    void smartMergeLists(ShoppingList& toMerge);
+    void createNewProduct(Product* type, int quantity, std::string& name);
     bool isAnyProductEqual(ShoppingList& toCompare);
     bool isEmpty();
+
+
+    void deleteProduct(int index);
+    std::vector<Product*> getProduct(int index);
 };
 
 #endif //SHOPPING_LIST_SHOPPINGLIST_H
