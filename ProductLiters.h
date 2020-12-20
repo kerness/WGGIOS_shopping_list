@@ -8,7 +8,7 @@
 
 class ProductLiters : public Product{
 protected:
-    std::string _unit;
+    const std::string _unit;
 public:
     explicit ProductLiters(std::string name = "undefined", int quantity = 0) : Product(name, quantity), _unit("liters") {}
     ~ProductLiters() override = default;

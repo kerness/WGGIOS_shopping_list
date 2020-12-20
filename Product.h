@@ -14,7 +14,7 @@ protected:
     int _quantity;
 public:
     explicit Product(std::string name = "unknown", int quantity = 0) : _name(name), _quantity(quantity), _unit("undefined") {}
-    virtual ~Product();
+    virtual ~Product()= default;
     std::string getName();
     std::string getUnit();
     int getQuantity();

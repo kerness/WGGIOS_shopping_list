@@ -10,7 +10,7 @@
 
 class ProductWeight : public Product{
 protected:
-    std::string _unit;
+    const std::string _unit;
 public:
     explicit ProductWeight(std::string name = "undefined", int quantity = 0) : Product(std::move(name), quantity), _unit("kilograms") {}
     ~ProductWeight() override = default;

@@ -9,7 +9,7 @@
 class ProductPieces : public Product{
 protected:
     //static const std::string _unit;
-    std::string _unit;
+    const std::string _unit;
 
 public:
     explicit ProductPieces(std::string name = "undefined", int quantity = 0) : Product(name, quantity), _unit("pieces") {}

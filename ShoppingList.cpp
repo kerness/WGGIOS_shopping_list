@@ -23,9 +23,12 @@ ShoppingList &ShoppingList::operator+=(const ShoppingList &source) {
     this->_name = "Merged_" + this->_name + "_" +source._name;
 
     for (int i = 0; i < source._products.size(); ++i) {
-        auto productPointer = this->_products[i];
+        auto productPointer = source._products[i];
         auto productName = source._products[i]->getName();
         this->createNewProduct(productPointer, source._products[i]->getQuantity(), productName);
+
+//        printf("TEST_________");
+//        std:cout <<
     }
     return *this;
 }
@@ -98,22 +101,28 @@ void ShoppingList::moveProduct(ShoppingList &destination, int productIndex) {
     destination._products.push_back(this->_products[productIndex]);
     this->_products.erase(this->_products.begin() + productIndex);
 }
+
 void ShoppingList::smartMergeLists(ShoppingList &toMerge) {
-    // dumb merge list first
-    *this += toMerge;
     // find duplicates and sum quantity
-    for (auto & p1 : this->_products) {
-        for (auto & p2 : toMerge._products) {
-            if (p1->getUnit() == p2->getUnit() &&
-                p1->getName() == p2->getName() ) {
-                p1->setQuantity(p1->getQuantity() + p2->getQuantity());
+    for (int i = 0; i < this->_products.size(); ++i) {
+        for (int j = 0; j < toMerge._products.size(); ++j) {
+            if (this->_products[i]->getUnit() == toMerge._products[j]->getUnit() &&
+                this->_products[i]->getName() == toMerge._products[j]->getName() ) {
+                this->_products[i]->setQuantity(this->_products[i]->getQuantity() + toMerge._products[j]->getQuantity());
+                toMerge.deleteProduct(j); // delete duplicated product form toMerge
             }
         }
     }
+    *this += toMerge;
 }
+
 void ShoppingList::createNewProduct(Product *type, int quantity, std::string &name) {
     _products.push_back(type->createNew(name, quantity));
 }
 void ShoppingList::deleteProduct(int index) {
     this->_products.erase(_products.begin() + index);
+}
+
+void ShoppingList::deleteProductByPointer(Product *toDelete) {
+
 }

@@ -28,7 +28,7 @@ private:
 
 public:
     // constructor
-    ShoppingList(std::string& name, int cap = DEFAULT_CAPACITY);
+    explicit ShoppingList(std::string& name, int cap = DEFAULT_CAPACITY);
     // copy constructor
     //ShoppingList(const ShoppingList& source);
     // overloaded '=' operator
@@ -46,10 +46,10 @@ public:
     void createNewProduct(Product* type, int quantity, std::string& name);
     bool isAnyProductEqual(ShoppingList& toCompare);
     bool isEmpty();
-
-
     void deleteProduct(int index);
-    std::vector<Product*> getProduct(int index);
+
+    void deleteProductByPointer(Product* toDelete);
+    //std::vector<Product*> getProduct(int index);
 };
 
 #endif //SHOPPING_LIST_SHOPPINGLIST_H

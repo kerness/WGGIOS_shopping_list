@@ -8,9 +8,9 @@
 
 //const std::string Product::_unit = "undefined";
 
-Product::~Product() {
-
-}
+//Product::~Product() {
+//
+//}
 
 std::string Product::getName() {
     return _name;
