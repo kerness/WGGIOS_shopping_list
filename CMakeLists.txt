@@ -3,4 +3,4 @@ project(BakMaciej-etap2)
 
 set(CMAKE_CXX_STANDARD 14)
 
-add_executable(BakMaciej-etap2 main.cpp Product.cpp ShoppingList.cpp ProductPieces.cpp ProductWeight.cpp ProductLiters.cpp theShoppingList.cpp)
+add_executable(BakMaciej-etap2 main.cpp Product.cpp ShoppingList.cpp ProductPieces.cpp ProductWeight.cpp ProductLiters.cpp)

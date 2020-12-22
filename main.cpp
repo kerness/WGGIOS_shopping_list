@@ -117,6 +117,7 @@ int getInt(bool isFile) {
     if(isFile) {
         testFile >> intInput;
         std::cout << intInput;
+        std::cout << std::endl;
         return intInput;
     }
     else {
@@ -143,7 +144,7 @@ int getAndStoreFloat(bool isFile) {
         std::cout << floatInput;
         floatInput *= 100;
         int floatAsInt = static_cast<int>(floatInput);  // static_cast ????
-        std::cout << floatAsInt;
+        std::cout << std::endl;
         return  floatAsInt;
     }
     else {
@@ -158,7 +159,7 @@ int getAndStoreFloat(bool isFile) {
             std::cout << std::endl;
             floatInput *= 100;
             int floatAsInt = static_cast<int>(floatInput);
-            std::cout << floatAsInt;
+            std::cout << std::endl;
             return  floatAsInt;
         }
     }
@@ -249,6 +250,8 @@ void addProductToShoppingList(std::vector<ShoppingList>& list, int listPos) {
     if (list[listPos].getDefaultCapacity() > list[listPos].getElementsCounter()) {// if there is less than 10 elements
         //std::cout << "sys: you are editing '" <<list[listPos].getShoppingListName() << "' list." << std::endl;
         std::cout << "sys: there are three item categories. choose one which is the most suitable for your product" << std::endl;
+        std::cout << "sys: each category stores value in unit given inside []. " << std::endl;
+        std::cout << "sys: for pieces you can use only integers. For weight and liters you can use double precision floating numbers." << std::endl;
         std::cout << "|" << std::setw(10) << " 1. pieces[pcs] |" << " 2. weight[kg] |" << " 3. liters[l] |" << std::endl;
         int categoryNum = getInt(isFileArgument);
         if (categoryNum == -1 || categoryNum > 3) { // check if input is out of an range. if yes:  returns to main menu
@@ -284,7 +287,7 @@ void moveProductToAnotherShoppingList(std::vector<ShoppingList>& lists, int from
     std::cout << "sys: choose number of a product to move product from '" << lists[fromIndex].getShoppingListName() << "'" << std::endl;
     lists[fromIndex].printListContents();
     int productToMove = getInt(isFileArgument);
-    std::cout << "sys: choose number of a list to move selected product'" << std::endl;
+    std::cout << "sys: choose number of a list to move selected product" << std::endl;
     showShoppingLists(lists);
     int destinationIndex = getInt(isFileArgument);
     if(destinationIndex == fromIndex) { // prevent form moving product form THIS list to THIS list

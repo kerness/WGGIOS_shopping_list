@@ -20,7 +20,7 @@ ShoppingList::~ShoppingList() {
     for (auto & p : _products) {
         delete p;
     }
-    //std::vector<Product*>().swap(_products);
+    std::vector<Product*>().swap(_products);
 }
 
 ShoppingList &ShoppingList::operator+=(const ShoppingList &source) {
