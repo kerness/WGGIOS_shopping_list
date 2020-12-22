@@ -1,10 +1,10 @@
 //
-// Created by maciek on 16.12.2020.
+// Created by Maciej Bąk on 18.11.2020.
+// Version 2.0 - updated: 22.12.2020
 //
 
-#ifndef SHOPPING_LIST_PRODUCTWEIGHT_H
-#define SHOPPING_LIST_PRODUCTWEIGHT_H
-//#include <utility>
+#ifndef PRODUCTWEIGHT_H
+#define PRODUCTWEIGHT_H
 
 #include "Product.h"
 
@@ -18,4 +18,4 @@ public:
     Product* createNew(std::string name, int quantity) override;
 };
 
-#endif //SHOPPING_LIST_PRODUCTWEIGHT_H
+#endif //PRODUCTWEIGHT_H

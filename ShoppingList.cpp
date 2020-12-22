@@ -1,6 +1,8 @@
 //
-// Created by maciek on 16.12.2020.
+// Created by Maciej Bąk on 18.11.2020.
+// Version 2.0 - updated: 22.12.2020
 //
+
 #include "ShoppingList.h"
 #include <iomanip>
 #include "ProductPieces.h"
@@ -9,14 +11,18 @@
 #include <vector>
 #include <string>
 
+// constructor
 ShoppingList::ShoppingList(std::string &_name, int _capacity) : _name(_name), _capacity(_capacity), _elementsCounter(0) {
 }
+
+// destructor
 ShoppingList::~ShoppingList() {
     for (auto & p : _products) {
         delete p;
     }
-    std::vector<Product*>().swap(_products);
+    //std::vector<Product*>().swap(_products);
 }
+
 ShoppingList &ShoppingList::operator+=(const ShoppingList &source) {
     this->_capacity += source._capacity;
     this->_elementsCounter += source._elementsCounter;
@@ -26,23 +32,24 @@ ShoppingList &ShoppingList::operator+=(const ShoppingList &source) {
         auto productPointer = source._products[i];
         auto productName = source._products[i]->getName();
         this->createNewProduct(productPointer, source._products[i]->getQuantity(), productName);
-
-//        printf("TEST_________");
-//        std:cout <<
     }
     return *this;
 }
+
 std::string ShoppingList::getShoppingListName() {
     return _name;
 }
-int ShoppingList::getElementsCounter() {
+
+int ShoppingList::getElementsCounter() const {
     return _elementsCounter;
 }
-int ShoppingList::getDefaultCapacity() const {
+
+int ShoppingList::getDefaultCapacity() {
     return DEFAULT_CAPACITY;
 }
+
 void ShoppingList::addProduct(int categoryNum, const std::string &name, int quant) {
-    //if (_elementsCounter == _capacity)
+    /*adding new product to shopping list. User can decide which product will be crated*/
     if (_products.size() == _capacity)
         printf("sys: shopping list if full!");
     else {
@@ -63,10 +70,12 @@ void ShoppingList::addProduct(int categoryNum, const std::string &name, int quan
                 return;
         }
         _products.push_back(productPointer);
-        //_elementsCounter++;
+        _elementsCounter++;
     }
 }
+
 void ShoppingList::printListContents() {
+    /*prints elements of a list*/
     if (_products.empty()) {
         std::cout << "sys: this list is empty.\n";
         return;
@@ -79,6 +88,7 @@ void ShoppingList::printListContents() {
     }
     std::cout << std::setfill('-') << std::setw(32) << "\n";
 }
+
 bool ShoppingList::isAnyProductEqual(ShoppingList &toCompare) {
     /*check if there is any product equal by name and unit in two shopping lists*/
     bool isAnyElementEqual = false;
@@ -91,19 +101,24 @@ bool ShoppingList::isAnyProductEqual(ShoppingList &toCompare) {
     }
     return isAnyElementEqual;
 }
+
 bool ShoppingList::isEmpty() {
+    /*check if list is empty*/
     if(_products.empty())
         return true;
     else
         return false;
 }
+
 void ShoppingList::moveProduct(ShoppingList &destination, int productIndex) {
+    /*move product from one list to another*/
     destination._products.push_back(this->_products[productIndex]);
+    // delete moved product
     this->_products.erase(this->_products.begin() + productIndex);
 }
 
 void ShoppingList::smartMergeLists(ShoppingList &toMerge) {
-    // find duplicates and sum quantity
+    /* smart list merge. find 'duplicates' (the same name and unit) and sum quantity */
     for (int i = 0; i < this->_products.size(); ++i) {
         for (int j = 0; j < toMerge._products.size(); ++j) {
             if (this->_products[i]->getUnit() == toMerge._products[j]->getUnit() &&
@@ -117,12 +132,10 @@ void ShoppingList::smartMergeLists(ShoppingList &toMerge) {
 }
 
 void ShoppingList::createNewProduct(Product *type, int quantity, std::string &name) {
+    /*create new product using virtual createNew by Product *type pointer*/
     _products.push_back(type->createNew(name, quantity));
 }
 void ShoppingList::deleteProduct(int index) {
+    /*delete specified item for a list*/
     this->_products.erase(_products.begin() + index);
-}
-
-void ShoppingList::deleteProductByPointer(Product *toDelete) {
-
 }

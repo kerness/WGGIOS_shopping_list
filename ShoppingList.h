@@ -1,10 +1,10 @@
 //
-// Created by maciek on 16.12.2020.
+// Created by Maciej Bąk on 18.11.2020.
+// Version 2.0 - updated: 22.12.2020
 //
 
-#ifndef SHOPPING_LIST_SHOPPINGLIST_H
-#define SHOPPING_LIST_SHOPPINGLIST_H
-
+#ifndef SHOPPING_LIST_H
+#define SHOPPING_LIST_H
 
 #include "Product.h"
 #include "ProductPieces.h"
@@ -13,9 +13,6 @@
 #include <iostream>
 #include <vector>
 #include <string>
-
-// TODO zamienić _products.size() na metodę
-
 
 class ShoppingList {
 
@@ -29,27 +26,24 @@ private:
 public:
     // constructor
     explicit ShoppingList(std::string& name, int cap = DEFAULT_CAPACITY);
-    // copy constructor
-    //ShoppingList(const ShoppingList& source);
-    // overloaded '=' operator
-    //ShoppingList& operator=(const ShoppingList& source);
     // destructor
     ~ShoppingList();
+    // overloaded += operator
     ShoppingList& operator+=(const ShoppingList& source);
+    // get something functions
     std::string getShoppingListName();
-    int getElementsCounter();
-    int getDefaultCapacity() const;
+    int getElementsCounter() const;
+    static int getDefaultCapacity() ;
+    // product management functions
     void addProduct(int categoryNum, const std::string& name, int quant);
     void printListContents();
     void moveProduct(ShoppingList& destination, int productIndex);
     void smartMergeLists(ShoppingList& toMerge);
     void createNewProduct(Product* type, int quantity, std::string& name);
+    void deleteProduct(int index);
+    // checking functions
     bool isAnyProductEqual(ShoppingList& toCompare);
     bool isEmpty();
-    void deleteProduct(int index);
-
-    void deleteProductByPointer(Product* toDelete);
-    //std::vector<Product*> getProduct(int index);
 };
 
-#endif //SHOPPING_LIST_SHOPPINGLIST_H
+#endif // SHOPPING_LIST_H

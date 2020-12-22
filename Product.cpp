@@ -1,16 +1,9 @@
 //
-// Created by maciek on 16.12.2020.
+// Created by Maciej Bąk on 18.11.2020.
+// Version 2.0 - updated: 22.12.2020
 //
 
 #include "Product.h"
-
-#include <iostream>
-
-//const std::string Product::_unit = "undefined";
-
-//Product::~Product() {
-//
-//}
 
 std::string Product::getName() {
     return _name;
@@ -20,7 +13,7 @@ std::string Product::getUnit() {
     return _unit;
 }
 
-int Product::getQuantity() {
+int Product::getQuantity() const {
     return _quantity;
 }
 
