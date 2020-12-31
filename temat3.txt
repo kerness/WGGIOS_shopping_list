@@ -1,33 +1,81 @@
 Temat 3 - Lista zakupów
-Wykorzystane IDE: Visual Studio 2019
+Wykorzystane IDE: CLion
 Autor: Bąk Maciej | 400666 geoinf
+
+-----Opis etapu drugiego-----
+
+Etap drugi projektu obejmował dodanie następujących funkcjonalności do programu:
+    - obsługa trzech kategorii produktów: produkty na sztuki [ProductPieces], na wagę [ProductWeight] oraz na litry [ProductLiters]
+        * ProductPieces, ProductWeight oraz ProductLiters są klasami, które dziedziczą po klasie Product w sposób publiczny. 
+          Zawierają konieczne funkcje wirtualne i odpowiednio ustawiają jednostkę produktu.
+
+    - umożliwienie przenoszenie produktów między listami
+        * zrealizowane za pomocą funkcji moveProductToAnotherShoppingList w main oraz metody klasy listy zakupów moveProduct. Najpierw pobierane są dane, aby wskazać,
+          który produkt i gdzie ma zostać przeniesiony. Następnie wywoływania jest funkcja moveProduct obsługująca przeniesienie produktu do innej listy i usunięcie go z listy,
+          z której miał być przeniesiony.
+
+    - umożliwienie inteligentnego scalania list - sumowanie ilość produktu o tej samej nazwie i tej samej jednostce (ta sama klasa pochodna od klasy Product)
+        * Scalanie list możliwe jest w dwóch wariantach, gdy jakiś produkt sie powtarza i gdy tak nie jest. Funkcja mergeShoppingLists w pliku main.cpp najpierw sprawdza, czy łączenie jest możliwe,
+        czy listy nie są puste lub, czy nie chcemy połączyć listy z tą samą listą, lub z listą pustą. Następnie następuje wywołanie funkcji isAnyProductEqual, która sprawdza, czy w listach zakupów jakikolwiek
+        produkt ma taką samą nazwę i typ. Jeśli tak jest wywołana zostaje funkcja smartMergeLists, która łączy listy z dodawaniem ilości tych produktów, które mają taka samą nazwę i typ.
+        Jeśli isAnyProductEqual zwraca wartość false, to łączenie list odbywa się za pomocą przeładowanego operatora +=, który po prostu łączy dwie listy dodając jedną na koniec drugiej.
+        Zdecydowałem, że nie będzie tutaj obowiązywał warunek, że lista nie może mieć więcej niż 10 elementów, bo byłoby to niepraktyczne z punktu widzenia użytkownika.
+
+    - umożliwienie uruchomienia programu z argumentem wiersza poleceń, którym miała być ścieżka do pliku z którego miały być wczytane komendy do sprawdzania poprawności działania programu
+        * do tego celu zastosowano dwie zmienne globalne, jedna obsługuje plik, druga zmienna typu bool pozwala określić w jaki sposób funkcje wczytujące dane mają te dane wczytywać.
+          Jeśli ścieżka do pliku jest podana jako argument, wartość zmiennej bool ustawiana jest na true - wpływa to na zachowanie funkcji wczytujących dane. 
+          Dane wczytywane są z pliku, nie z klawiatury. Gdy program jest wywołany bez argumentu to wczytywanie danych odbywa się w sposób standardowy z wykorzystaniem klawiatury
+
+W stosunku do etapu pierwszego usunięto:
+    - ze względu na brak konieczności istnienia przeładowanego operatora = dla klasy ShoppingList zdecydowałem o jego usunięciu (przeładowałem jednak operator += co opiszę później)
+    - usunięto konstruktor kopiujący dla klasy ShoppingList (w odpowiedni sposób mógł być użyty do łączenia list jednak zdecydowałem się na użycie operatora +=)
+    - dla poprawy czytelności i ułatwienia obsługi programu usunięto komunikaty sygnalizujące działanie konstruktora, destruktora i operatora +=
+
+Klasa product stała się klasą abstrakcyjną z dwoma funkcjami czysto wirtualnymi. Jedna z nich odpowiada za odpowiedni sposób wypisywania produktów, natomiast druga jest jakby "wirtualnym konstruktorem",
+który pozwala na stworzenie odpowiedniego obiektu klasy dziedziczącej po klasie Product na podstawie wskaźnika.
+
+Zmieniono jeden z kluczowych elementów programu: sposób przechowywania produktów (klasa Product) w klasie reprezentującej listę zakupów (ShoppingList). Wykorzystana w pierwszym etapie tablica,
+została zastąpiona wektorem, który przechowuje wskaźniki do obiektów klas związanych z klasą Product.
+
+Zmieniono również strukturę menu programu - dodano menu edycji, do którego można dostać się z menu głównego - znajdują sie tam wszystkie dostępne opcje edycji listy zakupów.
+Przed wejściem do tego menu użytkownik wybiera listę, na której chce pracować w menu edycji.
+
+W programie zastosowano sposób przechowywania liczb typu float jako liczby typu int - dotyczy to jedynie liczb opisujących ilość danego produktu. 
+Gdy pobierana jest ilość typu float (co jest możliwe dla klasy produktów na wagę i na litry), jej wartość jest mnozona przez 100 następnie zostaje ona przekonwertowana na int. 
+Przy wypisywaniu ilość produktów liczba dzielona jest przez 100 aby zachować poprawność wartości ilości produktów.
+Ten sposób oferuje dokładność jedynie do dwóch miejsc po przecinku, jednak w programie, który obsługuje listę zakupów większa dokładność nie jest wymagana.
+Na ogół kupujemy 1.5 kg ziemniaków, nie precyzujemy, że potrzebujemy ich 1.5432 kg - byłoby to wysoce niepraktyczne.
+
+Poprawność działania została sprawdzona na systemie Linux(Ubuntu).
+
+
+-----Opis etapu pierwszego-----
 
 Pracę rozpocząłem od dokładnej analizy tematu, pomogło w tym wykonanie notatek i rozrysowanie grafu przedstawiającego strukturę programu.
 Następnie zdefiniowałem potrzebne klasy i stworzyłem program do ich obsługi w pliku z funkcją main.
 Na program składają się dwie zdefiniowane klasy obiektów: ShoppingList oraz Product:
 
-    - ShoppingList- klasa definiująca obiekt, jakim jest lista zakupów.
-        Przechowuje w sobie nazwę listy zakupów [name], wskaźnik na obiekt klasy Product [products] (wykorzystany do stworzenia tablicy produktów),
-        dwie zmienne typu int [elementsCounter] oraz [capacity] opisujące odpowiednio ilość elementów w tablicy produktów, oraz pojemność tej tablicy.
-        Statyczna stała int [DEFAULT_CAPACITY] przechowuje domyślną pojemność tablicy wskaźników na Produkty równą 10. Zdefiniowane zostały także 
-        Odpowiednie metody do obsługi niezbędnych funkcjonalności programu. Cechą charakterystyczną tej klasy jest wykorzystanie "the rule of three".
-        Zdefiniowany został w niej konstruktor kopiujący, przeładowany operator przypisania(=) oraz destruktor. 
-        Aktualnie przeładowany operator przypisania nie jest wykorzystywany ze względu na brak stwierdzenia konieczności jego zastosowania. 
-        Jednak w trakcie rozwijania projektu może być użyty np. do kopiowania zawartości list lub przenoszenia ich zawartości między sobą.
-    
-    - Product - klasa definiująca obiekt reprezentujący produkt/przedmiot, jaki można kupić w sklepie
-        W prywatnych elementach klasy znajdują się dwie zmienne [name] oraz [quantity] mogące opisać nazwę produktu i jego ilość. 
-        Zdefiniowane zostały trzy konstruktory, każdy z nich przyjmuje inny zestaw argumentów. Równocześnie każdy z nich ustawia domyślną ilość danego produktu na 0. 
-        Klasa ta ma znacznie prostszą strukturę niż klasa ShoppingList. Dostępne metody pozwalają na zarządzanie prywatnymi składnikami klasy.
+    - ShoppingList- klasa definiująca obiekt, jakim jest lista zakupów.
+        Przechowuje w sobie nazwę listy zakupów [name], wskaźnik na obiekt klasy Product [products] (wykorzystany do stworzenia tablicy produktów),
+        dwie zmienne typu int [elementsCounter] oraz [capacity] opisujące odpowiednio ilość elementów w tablicy produktów, oraz pojemność tej tablicy.
+        Statyczna stała int [DEFAULT_CAPACITY] przechowuje domyślną pojemność tablicy wskaźników na Produkty równą 10. Zdefiniowane zostały także
+        Odpowiednie metody do obsługi niezbędnych funkcjonalności programu. Cechą charakterystyczną tej klasy jest wykorzystanie "the rule of three".
+        Zdefiniowany został w niej konstruktor kopiujący, przeładowany operator przypisania(=) oraz destruktor.
+        Aktualnie przeładowany operator przypisania nie jest wykorzystywany ze względu na brak stwierdzenia konieczności jego zastosowania.
+        Jednak w trakcie rozwijania projektu może być użyty np. do kopiowania zawartości list lub przenoszenia ich zawartości między sobą.
 
-Plik main.cpp zawiera główną funkcję main, w które zastosowano instrukcję wyboru switch, 
-która wraz z funkcją printMainMenu (konsolowe GUI) odpowiada za interakcje z użytkownikiem. 
-W zależności od wartości zmiennej sterującej switch'em wywoływana jest odpowiednia funkcja, 
-której nagłówki zdefiniowano przed pętlą główną programu. 
+    - Product - klasa definiująca obiekt reprezentujący produkt/przedmiot, jaki można kupić w sklepie
+        W prywatnych elementach klasy znajdują się dwie zmienne [name] oraz [quantity] mogące opisać nazwę produktu i jego ilość.
+        Zdefiniowane zostały trzy konstruktory, każdy z nich przyjmuje inny zestaw argumentów. Równocześnie każdy z nich ustawia domyślną ilość danego produktu na 0.
+        Klasa ta ma znacznie prostszą strukturę niż klasa ShoppingList. Dostępne metody pozwalają na zarządzanie prywatnymi składnikami klasy.
+
+Plik main.cpp zawiera główną funkcję main, w które zastosowano instrukcję wyboru switch,
+która wraz z funkcją printMainMenu (konsolowe GUI) odpowiada za interakcje z użytkownikiem.
+W zależności od wartości zmiennej sterującej switch'em wywoływana jest odpowiednia funkcja,
+której nagłówki zdefiniowano przed pętlą główną programu.
 Program został zabezpieczony przed wywoływaniem nieistniejących elementów list, oraz wpisywaniem znaków zamiast liczb.
-Każda z tych funkcji odpowiada za inna funkcjonalność i wykonuje operacje na obiektach klas. 
+Każda z tych funkcji odpowiada za inna funkcjonalność i wykonuje operacje na obiektach klas.
 Działanie konstruktora kopiującego, destruktora i przeładowanego operatora przypisania jest sygnalizowane stosownym komunikatem *system message*.
 
 Poprawność działania programu (oraz poprawność kompilacji) została sprawdzona na systemie Windows 10,
 oraz na maszynie wirtualnej z zainstalowanym systemem Linux w dystrybucji UBUNTU.
-
