@@ -8,6 +8,7 @@
 #include "ProductPieces.h"
 #include "ProductLiters.h"
 #include "ProductWeight.h"
+#include "ShoppingListError.h"
 #include <vector>
 #include <string>
 
@@ -20,7 +21,6 @@ ShoppingList::~ShoppingList() {
     for (auto & p : _products) {
         delete p;
     }
-    std::vector<Product*>().swap(_products);
 }
 
 ShoppingList &ShoppingList::operator+=(const ShoppingList &source) {
@@ -50,8 +50,10 @@ int ShoppingList::getDefaultCapacity() {
 
 void ShoppingList::addProduct(int categoryNum, const std::string &name, int quant) {
     /*adding new product to shopping list. User can decide which product will be crated*/
-    if (_products.size() == _capacity)
-        printf("sys: shopping list if full!");
+    if (_products.size() == _capacity) {
+        //throw ShoppingListFull(_name);
+         printf("sys: shopping list if full!");
+    }
     else {
         Product* productPointer;
         // switch statement - let user decide which inherited object will be created
@@ -69,7 +71,7 @@ void ShoppingList::addProduct(int categoryNum, const std::string &name, int quan
                 printf("sys: input out of range. try again");
                 return;
         }
-        _products.push_back(productPointer);
+        _products.addBack(productPointer);
         _elementsCounter++;
     }
 }
@@ -82,10 +84,16 @@ void ShoppingList::printListContents() {
     }
     std::cout << "sys: '" << _name << "' shopping list has following elements:\n";
     std::cout << std::setfill('-') << std::setw(32) << "\n";
-    for (int i = 0; i < this->_products.size(); ++i) {
-        std::cout << i << std::setfill(' ');
-        _products[i]->printDetails();
+    try {
+        for (int i = 0; i < this->_products.size(); ++i) {
+            std::cout << i << std::setfill(' ');
+            _products[i]->printDetails();
+        }
     }
+    catch (ContainerOutOfRange& con) {
+        std::cerr << con.what();
+    }
+
     std::cout << std::setfill('-') << std::setw(32) << "\n";
 }
 
@@ -112,7 +120,7 @@ bool ShoppingList::isEmpty() {
 
 void ShoppingList::moveProduct(ShoppingList &destination, int productIndex) {
     /*move product from one list to another*/
-    destination._products.push_back(this->_products[productIndex]);
+    destination._products.addBack(this->_products[productIndex]);
     // delete moved product
     this->_products.erase(this->_products.begin() + productIndex);
 }
@@ -129,11 +137,14 @@ void ShoppingList::smartMergeLists(ShoppingList &toMerge) {
         }
     }
     *this += toMerge;
+
 }
+
+
 
 void ShoppingList::createNewProduct(Product *type, int quantity, std::string &name) {
     /*create new product using virtual createNew by Product *type pointer*/
-    _products.push_back(type->createNew(name, quantity));
+    _products.addBack(type->createNew(name, quantity));
 }
 void ShoppingList::deleteProduct(int index) {
     /*delete specified item for a list*/

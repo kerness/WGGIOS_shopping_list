@@ -2,7 +2,14 @@ Temat 3 - Lista zakupów
 Wykorzystane IDE: CLion
 Autor: Bąk Maciej | 400666 geoinf
 
------Opis etapu drugiego-----
+-------------------------Opis etapu trzeciego-------------------------
+
+W etapie trzecim do programu dodane zostały następujące funkcjinalności:
+    
+
+
+
+-------------------------Opis etapu drugiego-------------------------
 
 Etap drugi projektu obejmował dodanie następujących funkcjonalności do programu:
     - obsługa trzech kategorii produktów: produkty na sztuki [ProductPieces], na wagę [ProductWeight] oraz na litry [ProductLiters]
@@ -49,7 +56,7 @@ Na ogół kupujemy 1.5 kg ziemniaków, nie precyzujemy, że potrzebujemy ich 1.5
 Poprawność działania została sprawdzona na systemie Linux(Ubuntu).
 
 
------Opis etapu pierwszego-----
+-------------------------Opis etapu pierwszego-------------------------
 
 Pracę rozpocząłem od dokładnej analizy tematu, pomogło w tym wykonanie notatek i rozrysowanie grafu przedstawiającego strukturę programu.
 Następnie zdefiniowałem potrzebne klasy i stworzyłem program do ich obsługi w pliku z funkcją main.

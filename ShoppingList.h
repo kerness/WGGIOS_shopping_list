@@ -10,6 +10,8 @@
 #include "ProductPieces.h"
 #include "ProductWeight.h"
 #include "ProductLiters.h"
+#include "ShoppingListError.h"
+#include "SmartContainer.h"
 #include <iostream>
 #include <vector>
 #include <string>
@@ -21,7 +23,8 @@ private:
     int _elementsCounter;
     int _capacity;
     std::string _name;
-    std::vector<Product*> _products;
+    //std::vector<Product*> _products;
+    SmartContainer<Product*> _products;
 
 public:
     // constructor
