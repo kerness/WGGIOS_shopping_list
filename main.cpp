@@ -8,7 +8,11 @@
     *Version 2.0*
     Updated: 22.12.2020
     You are able to move products between lists, merge them and add different types of products (pcs, kg, l)
-*/
+
+    *Version 3.0*
+    Updated: 12.01.2021
+    Exceptions handling and own vector-like class
+ */
 
 #include <iostream>
 #include <fstream>
@@ -17,7 +21,6 @@
 #include <iomanip>          // setw, setfill
 #include <limits>           // cin.ignore argument
 #include <climits>          // INT_MAX
-#include <chrono>
 #include "ShoppingList.h"
 
 

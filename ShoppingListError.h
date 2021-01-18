@@ -1,14 +1,11 @@
 //
-// Created by maciek on 05.01.2021.
+// Created by Maciej Bąk on 12.01.2020
 //
 
-#ifndef BAKMACIEJ_ETAP2_SHOPPINGLISTERROR_H
-#define BAKMACIEJ_ETAP2_SHOPPINGLISTERROR_H
-
-
+#ifndef SHOPPINGLISTERROR_H
+#define SHOPPINGLISTERROR_H
 
 #include <iostream>
-#include <utility>
 
 struct ShoppingListError : public std::exception {
     std::string _message;
@@ -31,11 +28,9 @@ struct NeitherExists : public ShoppingListError {
 struct IsEmpty : public ShoppingListError {
     explicit IsEmpty(std::string msg)
             : ShoppingListError() {
-        _message = msg;
+        _message = std::move(msg);
     }
 };
-
-// napisac struktirę która będzie obsługiwała wyjątek gdy przy przektocczeniu limitu 10 elementów będzie mozna zdecydowac czy chce się taka listę zapisac czy też nie
 
 struct TooLarge : public ShoppingListError {
     explicit TooLarge(std::string& name)
@@ -44,11 +39,5 @@ struct TooLarge : public ShoppingListError {
         _shoppingListName = name;
         _message = "'" + _shoppingListName + "' : " + _message;
     }
-
 };
-
-
-
-
-
-#endif //BAKMACIEJ_ETAP2_SHOPPINGLISTERROR_H
+#endif //SHOPPINGLISTERROR_H

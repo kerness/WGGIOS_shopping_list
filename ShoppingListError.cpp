@@ -1,5 +1,5 @@
 //
-// Created by maciek on 05.01.2021.
+// Created by Maciej Bąk on 12.01.2020
 //
 
 #include "ShoppingListError.h"

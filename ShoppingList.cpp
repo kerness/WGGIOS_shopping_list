@@ -1,6 +1,7 @@
 //
 // Created by Maciej Bąk on 18.11.2020.
 // Version 2.0 - updated: 22.12.2020
+// Version 3.0 - updated: 12.01.2020
 //
 
 #include "ShoppingList.h"
@@ -51,7 +52,6 @@ int ShoppingList::getDefaultCapacity() {
 void ShoppingList::addProduct(int categoryNum, const std::string &name, int quant) {
     /*adding new product to shopping list. User can decide which product will be crated*/
     if (_products.size() == _capacity) {
-        //throw ShoppingListFull(_name);
          printf("sys: shopping list if full!");
     }
     else {
@@ -139,8 +139,6 @@ void ShoppingList::smartMergeLists(ShoppingList &toMerge) {
     *this += toMerge;
 
 }
-
-
 
 void ShoppingList::createNewProduct(Product *type, int quantity, std::string &name) {
     /*create new product using virtual createNew by Product *type pointer*/

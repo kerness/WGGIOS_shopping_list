@@ -1,6 +1,7 @@
 //
 // Created by Maciej Bąk on 18.11.2020.
 // Version 2.0 - updated: 22.12.2020
+// Version 3.0 - updated: 12.01.2020
 //
 
 #ifndef SHOPPING_LIST_H
@@ -23,7 +24,6 @@ private:
     int _elementsCounter;
     int _capacity;
     std::string _name;
-    //std::vector<Product*> _products;
     SmartContainer<Product*> _products;
 
 public:

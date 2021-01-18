@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.16)
-project(BakMaciej-etap2)
+project(BakMaciej-etap3)
 
 set(CMAKE_CXX_STANDARD 14)
 
-add_executable(BakMaciej-etap2 main.cpp Product.cpp ShoppingList.cpp ProductPieces.cpp ProductWeight.cpp ProductLiters.cpp ShoppingListError.cpp ShoppingListError.h SmartContainer.cpp SmartContainer.h ContainerError.cpp)
+add_executable(BakMaciej-etap3 main.cpp Product.cpp Product.h ShoppingList.cpp ShoppingList.h ProductPieces.cpp ProductPieces.h ProductWeight.cpp ProductWeight.h ProductLiters.cpp ProductLiters.h ShoppingListError.cpp ShoppingListError.h SmartContainer.cpp SmartContainer.h ContainerError.cpp ContainerError.h)

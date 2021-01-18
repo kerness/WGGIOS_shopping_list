@@ -1,7 +1,6 @@
 //
-// Created by maciek on 06.01.2021.
+// Created by Maciej Bąk on 12.01.2020
 //
-
 
 #ifndef SMARTCONTAINER_H
 #define SMARTCONTAINER_H
@@ -48,7 +47,6 @@ public:
         setCapacity(2);
     }
     ~SmartContainer() {
-        //delete[] _container;
         _container = nullptr;
     }
     iterator begin() {
@@ -63,7 +61,6 @@ public:
     constIterator end() const {
         return _container + _actualSize;
     }
-
     const T& operator[](size_t index) const {
         // const version of operator []
         if (index < 0 || index >= _actualSize) {
@@ -71,7 +68,6 @@ public:
         }
         return _container[index];
     }
-
     T& operator[](size_t index) {
         // non const version of []
         if (index < 0 || index >= _actualSize) {
@@ -79,7 +75,6 @@ public:
         }
         return _container[index];
     }
-
     void addBack(const T& newData) {
         // add new element at the end of container
         if (_actualSize >= _capacity) {

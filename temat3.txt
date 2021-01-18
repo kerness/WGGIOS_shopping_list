@@ -4,9 +4,33 @@ Autor: Bąk Maciej | 400666 geoinf
 
 -------------------------Opis etapu trzeciego-------------------------
 
-W etapie trzecim do programu dodane zostały następujące funkcjinalności:
-    
+Trzeci etap prjektu polegał na dodaniu do programu szablonu klasy oraz obsługi wyjątków.
 
+W etapie trzecim do programu dodane zostały następujące funkcjinalności:
+    - szablon klasy SmartContainer - klasa naśladująca typ std::vector - posiada jego podstawowe funkcjnalności takie jak:
+      dodawanie i usuwanie elementów na końcu kontenera, usuwanie elementu na konkretnej pozycji, sprawdzanie rozmiaru i tego czy dany nie jest pusty.
+      Ponadto posiada przeładowe operatory indeksowania [] w wersji standardowej i const. Do funkcji erase niezbędne było wykorzystanie wskaźnika na typ elemntu, T* jako iteratora.
+        * dodatkowo zapewniona została podstawowa obsługa wyjątków dla tej klasy - struktura pomocnicza ConntainerError posiada klasę bazową dla innych typów wyjątków dla tego kontenera -
+          aktualnie jest to jedna struktura ContainerOutOfRange która czuwa nad tym, czy operator [] nie przekroczył możliwego zakresu. Struktura ContainerError dziedziczy po std::exception
+          i posiada przeciążoną funkcję virtualną what() aby wpasować się w system informowania o błędach biblioteki standardowej.
+        * szablon został wykorzystany w klase ShoppingLost do przechowywania wskaźników na typ Product SmartContainer<Product*> _products - z tego względu nie załacz osobnego pliku pokazującego działanie szablonu.
+
+    - struktura ShoppingListError zapewnia obsługę wyjątków dla klasy ShoppingList - jest zbudowana analogicznie do klasy ConntainerError. Rówież wpasowuje się w działanie standardowych wyjątków
+      dzięki przeciążeniu funkcji wirtualnej what(). Dodatkowo, w przyapdku strukturu pochodnej TooLarge może ona przyjąć do konstruktora nazwę listy, następnie w ciele konstruktora tworzy odpowiedni
+      komunikat z wykorzystaniem konkatenacji typów string
+       * wyjątek NeitherExists jest łapany w pętli głównej programu i obsługuje sytuacje w której użytkownik próbuje podjąć działania dotyczące list, których wcześniej nie utworzył -
+         nie załączam tutaj pliku który demonstruje jego działanie ze względu na to, że aby go wymusić wystarczy po uruchomieniu programu zamiast dodania nowej listy wybrac np. opcję edycji.
+       * wyjątek TooLarge jest łapany w editShoppingList() gdzie zabezpiecza przed stworzeniem listy większej niż 10 elementów - jego działanie prezentuje plik stdin-toolarge.txt
+         'nazwalisty' : shopping list is full. you can't add more than 10 items (z wejściem z pliku, po komunikacie wyświetlam jeszcze pełną listę)
+       * wyjatek IsEmpty rówież łapany w editShoppingList() obsługuje sytuacje w której użytkownik chciałby przenosić produkt z pustej listy - dodatkowo za argument przyjmuje stosowny komunikate
+         i gdy zostanie złapany wyświetla go (sys: you can not move product from an empty list.) - działanie prezentuje plik stdin-isempty.txt
+
+
+Do komunikowania o błędach zdecydowałem sie na użycie std::cout ze względu na to, że std::cerr często wyświetla komunikaty w nieodpowednich miejsach.
+
+Dodatkowo zmieniłem sposób obsługi plików - zmodyfikowałem program tak aby uniknąć używania zmiennych globalnych (ifstream oraz bool)
+
+Poprawność działania została sprawdzona na systemie Linux(Ubuntu).
 
 
 -------------------------Opis etapu drugiego-------------------------
